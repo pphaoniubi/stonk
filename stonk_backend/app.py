@@ -52,13 +52,21 @@ def get_rsi(request: StockRequest):
     rsi_data = calculate_rsi(data)
     return rsi_data.dropna().to_dict()
 
-@app.post("/stock/macd-graph")
+@app.post("/stock/macd-rsi")
 async def get_macd_graph(request: StockRequest):
 
     data = get_stock_data(request.ticker, request.period, request.interval)
     
     # Calculate MACD and plot
-    data = calculate_macd(data)
-    macd_image = plot_macd_with_histogram(data)
+    macd_data = calculate_macd(data)
+    macd_image = plot_macd_with_histogram(macd_data)
+
+    # calculate RSI
+    rsi_data = calculate_rsi(data)
+    rsi_image = plot_rsi(rsi_data)
     
-    return JSONResponse(content={"macd_image": macd_image})
+    
+    return JSONResponse(content={
+        "macd_image": macd_image,
+        "rsi_image": rsi_image 
+    })

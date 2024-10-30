@@ -20,7 +20,7 @@ def calculate_rsi(data: pd.DataFrame, window: int = 14):
     loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
     rs = gain / loss
     data['RSI'] = 100 - (100 / (1 + rs))
-    return data['RSI']
+    return data
 
 
 def calculate_macd(data: pd.DataFrame):
@@ -61,18 +61,27 @@ def calculate_and_plot_bollinger_bands(df, ticker, window=20, num_of_std=2):
     plt.show()
 
 
-def plot_rsi(ticker, df):
-    # Plotting days (Date) vs RSI
-    plt.figure(figsize=(10, 6))
-    plt.plot(df.index, df['RSI'], label='RSI', color='blue')
-    plt.axhline(70, color='red', linestyle='--')  # Overbought line
-    plt.axhline(30, color='green', linestyle='--')  # Oversold line
-    plt.axhline(50, color='black', linestyle='--')  
-    plt.title(f'{ticker} RSI Over Time')
-    plt.xlabel('Date')
-    plt.ylabel('RSI')
-    plt.legend()
-    plt.show()
+def plot_rsi(data):
+    fig, ax = plt.subplots(figsize=(10, 4))
+    
+    # Plot RSI
+    ax.plot(data['RSI'], label='RSI', color='purple')
+    ax.axhline(70, color='red', linestyle='--', linewidth=0.5, label='70')
+    ax.axhline(50, color='green', linestyle='--', linewidth=0.5, label='50')
+    ax.axhline(30, color='green', linestyle='--', linewidth=0.5, label='30')
+    ax.set_title('Relative Strength Index (RSI)')
+    ax.set_ylabel('RSI')
+    ax.set_xlabel('Date')
+    ax.legend()
+    
+    # Save the plot to a BytesIO buffer
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    plt.close(fig)  # Close the figure to free memory
+    
+    return image_base64
 
 
 def check_rsi_below_30_yesterday(ticker, df):
