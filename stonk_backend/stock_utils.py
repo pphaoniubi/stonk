@@ -24,11 +24,15 @@ def calculate_rsi(data: pd.DataFrame, window: int = 14):
 
 
 def calculate_macd(data: pd.DataFrame):
+        # Calculate MACD and Signal line
     data['EMA_12'] = data['Close'].ewm(span=12, adjust=False).mean()
     data['EMA_26'] = data['Close'].ewm(span=26, adjust=False).mean()
     data['MACD'] = data['EMA_12'] - data['EMA_26']
     data['Signal'] = data['MACD'].ewm(span=9, adjust=False).mean()
-    return data[['MACD', 'Signal']]
+    data['Histogram'] = data['MACD'] - data['Signal']  # This is the histogram
+    
+    # Drop helper columns to keep only necessary ones
+    return data[['MACD', 'Signal', 'Histogram']]
 
 def calculate_and_plot_bollinger_bands(df, ticker, window=20, num_of_std=2):
     # Calculate the Simple Moving Average (SMA)

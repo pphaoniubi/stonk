@@ -52,10 +52,9 @@ def get_rsi(request: StockRequest):
     rsi_data = calculate_rsi(data)
     return rsi_data.dropna().to_dict()
 
-@app.get("/stock/macd-graph")
+@app.post("/stock/macd-graph")
 async def get_macd_graph(request: StockRequest):
-    # Load your stock data here (e.g., from a CSV or database)
-    # For example:
+
     data = get_stock_data(request.ticker, request.period, request.interval)
     
     # Calculate MACD and plot

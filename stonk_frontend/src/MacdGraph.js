@@ -14,7 +14,7 @@ function MacdGraph({ ticker }) {
           body: JSON.stringify({ ticker: ticker, period: "5d", interval: "1h" })
         });
         const data = await response.json();
-        setMacdImage(`data:image/png;base64,${data.image}`);
+        setMacdImage(`data:image/png;base64,${data.macd_image}`);
       } catch (error) {
         console.error("Error fetching MACD graph:", error);
       }
