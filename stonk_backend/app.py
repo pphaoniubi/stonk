@@ -70,3 +70,14 @@ async def get_macd_graph(request: StockRequest):
         "macd_image": macd_image,
         "rsi_image": rsi_image 
     })
+
+@app.post("/stock/high-low-current")
+async def get_high_low_current(request: StockRequest):
+    data = get_stock_data(request.ticker, request.period, request.interval)
+
+    # Calculate high, low, and current price for the period
+    highest_price = data['High'].max()
+    lowest_price = data['Low'].min()
+    current_price = data['Close'].iloc[-1]  # Last closing price
+
+    return JSONResponse(content={"highest_price": highest_price, "lowest_price": lowest_price, "current_price": current_price})
