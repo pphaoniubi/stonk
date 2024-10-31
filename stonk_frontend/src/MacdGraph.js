@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-function MacdGraph({ ticker }) {
+function MacdGraph({ ticker, period, interval }) {
   const [macdImage, setMacdImage] = useState(null);
   const [rsiImage, setRsiImage] = useState(null);
   const [priceData, setPriceData] = useState(null);
+
 
   useEffect(() => {
     // Fetch MACD and RSI images
@@ -14,7 +15,7 @@ function MacdGraph({ ticker }) {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ ticker: ticker, period: "6mo", interval: "1d" })
+          body: JSON.stringify({ ticker: ticker, period: period, interval: interval })
         });
         const data = await response.json();
         setMacdImage(`data:image/png;base64,${data.macd_image}`);
@@ -32,7 +33,7 @@ function MacdGraph({ ticker }) {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ ticker: ticker, period: "1y", interval: "1d" })
+          body: JSON.stringify({ ticker: ticker, period: period, interval: interval })
         });
         const data = await response.json();
         setPriceData({
@@ -48,7 +49,7 @@ function MacdGraph({ ticker }) {
     // Call both functions
     fetchMacdAndRsiImages();
     fetchHighLowCurrent();
-  }, [ticker]);
+  }, [ticker, period, interval]);
 
   const calculateProgress = () => {
     if (!priceData) return 0;
