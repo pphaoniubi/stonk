@@ -5,7 +5,7 @@ import matplotlib
 import time
 import io
 import base64
-from typing import Optional
+from io import BytesIO
 
 matplotlib.use("Agg")
 
@@ -147,3 +147,42 @@ def constant_check(period, interval):
 
         time.sleep(1800)
 
+def generate_candlestick_image(data) -> str:
+    if data.empty:
+        raise ValueError("No candlestick data found")
+
+    # Extract open, high, low, and close prices
+    opens = data['Open']
+    highs = data['High']
+    lows = data['Low']
+    closes = data['Close']
+    dates = data.index
+
+    # Create a figure and an axis
+    fig, ax = plt.subplots(figsize=(30, 12))
+
+    for i in range(len(dates)):
+        color = 'g' if closes.iloc[i] >= opens.iloc[i] else 'r'
+        # High-low line
+        ax.plot([i, i], [lows.iloc[i], highs.iloc[i]], color='black')  
+        # Candle body
+        ax.add_patch(plt.Rectangle((i - 0.2, min(opens.iloc[i], closes.iloc[i])), 
+                                     0.4, 
+                                     abs(closes.iloc[i] - opens.iloc[i]), 
+                                     color=color))
+
+    ax.set_title("Candlestick Chart")
+    ax.set_xticks(range(len(dates)))
+    ax.set_xticklabels(dates.strftime('%Y-%m-%d'), rotation=45)
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+
+    # Save to a BytesIO object
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.close()
+
+    # Convert to base64
+    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return img_base64

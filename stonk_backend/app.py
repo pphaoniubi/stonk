@@ -7,6 +7,7 @@ from typing import Optional
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 
@@ -81,3 +82,18 @@ async def get_high_low_current(request: StockRequest):
     current_price = data['Close'].iloc[-1]  # Last closing price
 
     return JSONResponse(content={"highest_price": highest_price, "lowest_price": lowest_price, "current_price": current_price})
+
+
+@app.post("/stock/candlestick")
+def get_candlestick_chart(request: StockRequest):
+    try:
+        data = get_stock_data(request.ticker, request.period, request.interval)
+        candlestick_image = generate_candlestick_image(data)
+        # Return the image data
+        return {"candlestick_image": candlestick_image}
+    except ValueError as ve:
+        # Handle specific errors related to stock data
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        # Handle generic errors
+        raise HTTPException(status_code=500, detail="An error occurred while generating the candlestick chart.")
