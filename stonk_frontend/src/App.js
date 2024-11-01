@@ -1,39 +1,92 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MacdGraph from './MacdGraph';
 
 function App() {
+  const [tickers, setTickers] = useState([
+    { label: 'Ethereum Classic (ETC)', value: 'ETC-USD' },
+    { label: 'Bitcoin (BTC)', value: 'BTC-USD' },
+    { label: 'Litecoin (LTC)', value: 'LTC-USD' },
+    { label: 'Ripple (XRP)', value: 'XRP-USD' },
+    { label: 'Air Canada (AC)', value: 'AC.TO' },
+    { label: 'Tesla (TSLA)', value: 'TSLA' },
+    { label: 'TD Bank', value: 'TD.TO' },
+    { label: 'Ethereum (ETH)', value: 'ETH-USD' },
+    { label: 'Dogecoin (DOGE)', value: 'DOGE-USD' },
+    // Add more tickers as needed
+    
+  ]);
+  const [filteredTickers, setFilteredTickers] = useState(tickers);
   const [ticker, setTicker] = useState("ETC-USD");
   const [submittedTicker, setSubmittedTicker] = useState("ETC-USD");
-  const [selectedPeriod, setSelectedPeriod] = useState('6mo'); // Default period
-  const [selectedInterval, setSelectedInterval] = useState('1mo'); // Default interval
+  const [selectedPeriod, setSelectedPeriod] = useState('1y'); // Default period
+  const [selectedInterval, setSelectedInterval] = useState('1d'); // Default interval
   const [finalPeriod, setFinalPeriod] = useState(selectedPeriod);
   const [finalInterval, setFinalInterval] = useState(selectedInterval);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  
+  // Update filtered tickers based on search query
+  useEffect(() => {
+    if (searchQuery === '') {
+      setFilteredTickers(tickers);
+    } else {
+      const filtered = tickers.filter(ticker =>
+        ticker.label.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredTickers(filtered);
+    }
+  }, [searchQuery, tickers]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmittedTicker(ticker);
     setFinalPeriod(selectedPeriod);
     setFinalInterval(selectedInterval);
   };
+
   return (
     <div>
       <h1>Stock Analysis App</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Ticker Symbol:
+          {/* Search input */}
           <input
             type="text"
-            value={ticker}
-            onChange={(e) => setTicker(e.target.value)}
+            placeholder="Search tickers..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
+          {/* Dropdown for filtered tickers */}
+          <select value={ticker} onChange={(e) => setTicker(e.target.value)}>
+            {filteredTickers.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </label>
 
-
-        {/* Priod radio */} 
+        {/* Period radio */}
         <div>
           <h3>Select Period</h3>
+          <label>
+            <input
+              type="radio"
+              value="1d"
+              checked={selectedPeriod === "1d"}
+              onChange={() => setSelectedPeriod("1d")}
+            />
+            1 Day
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="5d"
+              checked={selectedPeriod === "5d"}
+              onChange={() => setSelectedPeriod("5d")}
+            />
+            5 Day
+          </label>
           <label>
             <input
               type="radio"
@@ -72,9 +125,18 @@ function App() {
           </label>
         </div>
 
-        {/* Interval radio */} 
+        {/* Interval radio */}
         <div>
           <h3>Select Interval</h3>
+          <label>
+            <input
+              type="radio"
+              value="1h"
+              checked={selectedInterval === "1h"}
+              onChange={() => setSelectedInterval("1h")}
+            />
+            1 Hour
+          </label>
           <label>
             <input
               type="radio"
