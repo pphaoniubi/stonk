@@ -12,6 +12,8 @@ function App() {
     { label: 'TD Bank', value: 'TD.TO' },
     { label: 'Ethereum (ETH)', value: 'ETH-USD' },
     { label: 'Dogecoin (DOGE)', value: 'DOGE-USD' },
+    { label: 'Nvidia (NVDA)', value: 'NVDA' },
+    { label: 'Apple (AAPL)', value: 'AAPL' },
     // Add more tickers as needed
     
   ]);

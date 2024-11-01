@@ -4,14 +4,14 @@ function MacdGraph({ ticker, period, interval }) {
   const [macdImage, setMacdImage] = useState(null);
   const [rsiImage, setRsiImage] = useState(null);
   const [priceData, setPriceData] = useState(null);
-  const [candlestickImage, setCandlestickImage] = useState(null);
+  const [bollingerbandImage, setBollingerbandImage] = useState(null);
 
 
   useEffect(() => {
 
     async function fetchCandlestickChart() {
       try {
-        const response = await fetch("http://127.0.0.1:8000/stock/candlestick", {
+        const response = await fetch("http://127.0.0.1:8000/stock/bollingerband", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -19,7 +19,7 @@ function MacdGraph({ ticker, period, interval }) {
           body: JSON.stringify({ ticker: ticker, period: period, interval: interval })
         });
         const data = await response.json();
-        setCandlestickImage(`data:image/png;base64,${data.candlestick_image}`);
+        setBollingerbandImage(`data:image/png;base64,${data.bollingerband_image}`);
       } catch (error) {
         console.error("Error fetching chart:", error);
       }
@@ -79,13 +79,12 @@ function MacdGraph({ ticker, period, interval }) {
   return (
     <div>
       <h1>Candlestick Chart with Bollinger Bands</h1>
-      {candlestickImage && (
+      {bollingerbandImage && (
         <div>
           <h2>Chart for {ticker.toUpperCase()}</h2>
-          <img src={candlestickImage} alt={`${ticker} candlestick chart`} />
+          <img src={bollingerbandImage} alt={`${ticker} candlestick chart`} />
         </div>
       )}
-      <h2>MACD and RSI Graphs for {ticker}</h2>
       {macdImage ? <img src={macdImage} alt="MACD Graph" /> : <p>Loading MACD...</p>}
       {rsiImage ? <img src={rsiImage} alt="RSI Graph" /> : <p>Loading RSI...</p>}
 

@@ -84,13 +84,13 @@ async def get_high_low_current(request: StockRequest):
     return JSONResponse(content={"highest_price": highest_price, "lowest_price": lowest_price, "current_price": current_price})
 
 
-@app.post("/stock/candlestick")
-def get_candlestick_chart(request: StockRequest):
+@app.post("/stock/bollingerband")
+async def get_candlestick_chart(request: StockRequest):
     try:
         data = get_stock_data(request.ticker, request.period, request.interval)
-        candlestick_image = generate_candlestick_image(data)
+        bollingerband_image = calculate_and_plot_bollinger_bands(data)
         # Return the image data
-        return {"candlestick_image": candlestick_image}
+        return {"bollingerband_image": bollingerband_image}
     except ValueError as ve:
         # Handle specific errors related to stock data
         raise HTTPException(status_code=404, detail=str(ve))
