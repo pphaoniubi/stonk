@@ -97,3 +97,19 @@ async def get_candlestick_chart(request: StockRequest):
     except Exception as e:
         # Handle generic errors
         raise HTTPException(status_code=500, detail="An error occurred while generating the candlestick chart.")
+
+@app.post("/stock/getReturns")
+async def getReturns():
+    try:
+        returns = get_returns()
+        # Return the image data
+
+    except ValueError as ve:
+        # Handle specific errors related to stock data
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        # Handle generic errors
+        raise HTTPException(status_code=500, detail="An error occurred while generating the candlestick chart.")
+
+
+

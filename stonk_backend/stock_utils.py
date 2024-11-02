@@ -157,3 +157,34 @@ def constant_check(period, interval):
 
 
         time.sleep(1800)
+
+def get_returns():
+    # Define date range: 1 year ago to today
+
+    tickers = ['AAPL', 'GOOGL', 'TSLA']
+    returns = {}
+
+    for ticker in tickers:
+        # Fetch data
+        data = get_stock_data(ticker, period="1y", interval="1d")
+        
+        # Check if data is available
+        if not data.empty:
+            # Calculate return
+            start_price = data['Close'].iloc[0]
+            end_price = data['Close'].iloc[-1]
+            annual_return = ((end_price - start_price) / start_price) * 100
+            returns[ticker] = annual_return
+        else:
+            returns[ticker] = None
+            print(f"No data available for {ticker}")
+
+    # Sort the returns in descending order
+    sorted_returns = sorted(returns.items(), key=lambda x: x[1], reverse=True)
+
+    # Display sorted results
+    for ticker, ret in sorted_returns:
+        if ret is not None:
+            print(f"The annual return for {ticker} is {ret:.2f}%")
+        else:
+            print(f"No return data available for {ticker}")
