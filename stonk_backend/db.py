@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
 import yfinance as yf
+from io import StringIO
+import pandas as pd
 
 def fetch_and_store_data():
     try:
@@ -42,7 +44,6 @@ def fetch_and_store_data():
         print("Error updating data:", e)
 
 
-
 def fetch_tickers_from_db():
     try:
         # Connect to your MySQL database
@@ -70,3 +71,27 @@ def fetch_tickers_from_db():
     except Error as e:
         print("Error fetching tickers from database:", e)
         return []
+    
+
+def get_csv_from_db(ticker):
+    conn = mysql.connector.connect(
+    host="localhost",
+    database="stonk_db",
+    user="root",
+    password="12345678pP!"
+    )
+    cursor = conn.cursor()
+
+    # Fetch the CSV data from the database
+    cursor.execute("SELECT data_csv FROM stonk WHERE ticker = %s;", (ticker,))
+    csv_data = cursor.fetchone()[0]  # Assuming 'data_csv' is the first column
+
+    data = StringIO(csv_data)  # Convert string data to a file-like object
+    df = pd.read_csv(data)
+
+
+    # Close the cursor and connection
+    cursor.close()
+    conn.close()
+    
+    return df
