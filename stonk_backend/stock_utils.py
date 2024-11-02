@@ -6,6 +6,7 @@ import time
 import io
 import base64
 from io import BytesIO
+from db import *
 
 matplotlib.use("Agg")
 
@@ -115,7 +116,6 @@ def get_20_lowest(ticker, df):
     print(f'{ticker}: 20 lowests:')
     print(f'{lowest_prices_df['Close']}')
 
-
 def plot_macd_with_histogram(data):
     fig, ax = plt.subplots(figsize=(15, 6))
     
@@ -161,7 +161,7 @@ def constant_check(period, interval):
 def get_returns():
     # Define date range: 1 year ago to today
 
-    tickers = ['AAPL', 'GOOGL', 'TSLA']
+    tickers = fetch_tickers_from_db()
     returns = {}
 
     for ticker in tickers:

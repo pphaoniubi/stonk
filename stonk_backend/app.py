@@ -109,7 +109,7 @@ async def getReturns():
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
         # Handle generic errors
-        raise HTTPException(status_code=500, detail="An error occurred while generating the candlestick chart.")
+        raise HTTPException(status_code=500, detail="An error occurred while generating annual returns")
 
 
 
