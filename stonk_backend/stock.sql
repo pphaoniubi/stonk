@@ -5,15 +5,17 @@ create database stonk_db;
 use stonk_db;
 
 CREATE TABLE stonk (
-    id SERIAL PRIMARY KEY,
-    ticker VARCHAR(10) NOT NULL,
-    name VARCHAR(255),
-    data_csv TEXT,
-    price NUMERIC(10, 2),
-    return_1y NUMERIC(5, 2)
+    Ticker VARCHAR(10) PRIMARY KEY,
+    Name VARCHAR(30),
+    Date DATE,
+    Open DOUBLE,
+    High DOUBLE,
+    Low DOUBLE,
+    Close DOUBLE,
+    Volume BIGINT
 );
 
-INSERT INTO ticker_data (ticker, name) VALUES
+INSERT INTO stonk (ticker, name) VALUES
     ('ETC-USD', 'Ethereum Classic (ETC)'),
     ('BTC-USD', 'Bitcoin (BTC)'),
     ('LTC-USD', 'Litecoin (LTC)'),
@@ -75,3 +77,4 @@ INSERT INTO ticker_data (ticker, name) VALUES
     
 
 select * from stonk;
+

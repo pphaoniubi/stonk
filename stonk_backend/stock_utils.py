@@ -15,6 +15,7 @@ def get_stock_data(ticker: str, period: str = '1y', interval: str = '1d') -> pd.
     data = stock.history(period=period, interval=interval)
     return data
 
+
 def calculate_rsi(data: pd.DataFrame, window: int = 14):
     delta = data['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
@@ -169,9 +170,7 @@ def get_returns():
         # Check if data is available
         if not data.empty:
             # Calculate return
-            print(data['Close'].iloc[2])            ########
-            print(data['Close'].iloc[-1])
-            start_price = float(data['Close'].iloc[2])
+            start_price = float(data['Close'].iloc[2])            ########
             end_price = float(data['Close'].iloc[-1])
             annual_return = ((end_price - start_price) / start_price) * 100
             returns[ticker] = annual_return
@@ -188,3 +187,4 @@ def get_returns():
             print(f"The annual return for {ticker} is {ret:.2f}%")
         else:
             print(f"No return data available for {ticker}")
+
