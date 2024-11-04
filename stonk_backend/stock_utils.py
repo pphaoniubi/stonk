@@ -160,17 +160,18 @@ def constant_check(period, interval):
         time.sleep(1800)
 
 def get_returns():
-    tickers = fetch_tickers_from_db()
+    tickers_and_names = fetch_tickers_from_db()
     returns = {}
 
-    for ticker in tickers:
+    for ticker, name in tickers_and_names:
+        print(ticker)
         # Fetch data
-        data = get_csv_from_db(ticker)
+        data = fetch_data_for_ticker_as_df(ticker)
         
         # Check if data is available
         if not data.empty:
             # Calculate return
-            start_price = float(data['Close'].iloc[2])            ########
+            start_price = float(data['Close'].iloc[0])            ########
             end_price = float(data['Close'].iloc[-1])
             annual_return = ((end_price - start_price) / start_price) * 100
             returns[ticker] = annual_return
