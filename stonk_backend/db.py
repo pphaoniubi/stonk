@@ -5,7 +5,7 @@ from io import StringIO
 import pandas as pd
 from sqlalchemy import create_engine, Table, MetaData, Column, String, Float, Integer, Date, select
 
-
+db_password = '123456'
 def fetch_tickers_from_db():
     try:
         # Connect to your MySQL database
@@ -13,7 +13,7 @@ def fetch_tickers_from_db():
             host="localhost",
             database="stonk_db",
             user="root",
-            password="12345678pP!"
+            password=db_password
         )
         if conn.is_connected():
             cursor = conn.cursor()
@@ -38,7 +38,7 @@ def fetch_tickers_from_db():
 def fetch_and_store_data():
 
     # Connection and engine setup
-    engine = create_engine('mysql+pymysql://root:12345678pP!@localhost:3306/stonk_db', echo=True)
+    engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db', echo=True)
     metadata = MetaData()
     connection = engine.connect()
     transaction = connection.begin()
@@ -87,7 +87,7 @@ def fetch_and_store_data():
         connection.close()
 
 def fetch_data_for_ticker(ticker_symbol : str) -> pd.DataFrame:
-    engine = create_engine('mysql+pymysql://root:12345678pP!@localhost:3306/stonk_db')
+    engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')
 
     # Bind metadata to the existing database
     metadata = MetaData()
@@ -114,6 +114,3 @@ def fetch_data_for_ticker_as_df(ticker_symbol : str) -> pd.DataFrame:
     df['Date'] = pd.to_datetime(df['Date'])  # Ensure 'Date' is a datetime type
     df.set_index('Date', inplace=True)  # Set 'Date' as the index
     return df
-
-
-print(fetch_data_for_ticker_as_df('AC.TO'))
