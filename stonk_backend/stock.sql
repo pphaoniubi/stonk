@@ -5,14 +5,15 @@ create database stonk_db;
 use stonk_db;
 
 CREATE TABLE stonk (
-    Ticker VARCHAR(10) PRIMARY KEY,
-    Name VARCHAR(30),
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    Ticker VARCHAR(10),
     Date DATE,
     Open DOUBLE,
     High DOUBLE,
     Low DOUBLE,
     Close DOUBLE,
-    Volume BIGINT
+    Volume BIGINT,
+	Name VARCHAR(30)
 );
 
 INSERT INTO stonk (ticker, name) VALUES
@@ -73,8 +74,18 @@ INSERT INTO stonk (ticker, name) VALUES
     ('NEAR-USD', 'Near Protocol (NEAR)'),
     ('ALGO-USD', 'Algorand (ALGO)'),
     ('AAVE-USD', 'Aave (AAVE)');
-
     
 
 select * from stonk;
 
+  
+select * from stonk LIMIT 1000000;
+
+
+SELECT 
+    table_name AS `Table`, 
+    ROUND((data_length + index_length) / 1024 / 1024, 2) AS `Size in MB`
+FROM information_schema.TABLES 
+WHERE table_schema = 'stonk_db'
+    AND table_name = 'stonk';
+    
