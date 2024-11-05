@@ -19,7 +19,7 @@ def fetch_tickers_from_db():
             cursor = conn.cursor()
 
             # Execute SQL query to retrieve all tickers
-            cursor.execute("SELECT ticker, name FROM stonk;")
+            cursor.execute("SELECT ticker, name FROM ticker;")
             
             # Fetch all ticker symbols
             tickers_and_names = cursor.fetchall()

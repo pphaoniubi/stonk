@@ -101,7 +101,7 @@ async def get_candlestick_chart(request: StockRequest):
 @app.post("/stock/getReturns")
 async def getReturns():
     try:
-        returns = get_returns()
+        returns = get_annual_return()
         # Return the image data
 
     except ValueError as ve:
@@ -110,6 +110,3 @@ async def getReturns():
     except Exception as e:
         # Handle generic errors
         raise HTTPException(status_code=500, detail=e)
-
-
-

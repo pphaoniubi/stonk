@@ -159,12 +159,11 @@ def constant_check(period, interval):
 
         time.sleep(1800)
 
-def get_returns():
+def get_annual_return():
     tickers_and_names = fetch_tickers_from_db()
     returns = {}
-
+    print(tickers_and_names)
     for ticker, name in tickers_and_names:
-        print(ticker)
         # Fetch data
         data = fetch_data_for_ticker_as_df(ticker)
         
