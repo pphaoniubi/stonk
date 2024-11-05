@@ -113,3 +113,18 @@ async def getReturns():
     except Exception as e:
         # Handle generic errors
         raise HTTPException(status_code=500, detail=e)
+
+
+@app.post("/stock/getClosestToLow")
+async def getReturns():
+    try:
+        proximity_rank = rank_tickers_by_proximity()
+
+        return JSONResponse(content=proximity_rank)
+    
+    except ValueError as ve:
+        # Handle specific errors related to stock data
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        # Handle generic errors
+        raise HTTPException(status_code=500, detail=e)

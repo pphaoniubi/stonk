@@ -180,3 +180,39 @@ def get_annual_return():
     sorted_returns = sorted(returns.items(), key=lambda x: x[1], reverse=True)
 
     return sorted_returns
+
+
+def get_price_proximity(ticker):
+    # Fetch historical data for the ticker
+    data = fetch_data_for_ticker_as_df(ticker, period='1y')
+    
+    if not data.empty:
+        current_price = data['Close'].iloc[-1]  # Latest closing price
+        low_price = data['Close'].min()          # Lowest closing price over the period
+        
+        # Calculate the proximity score (the closer to the low, the better)
+        proximity_score = (current_price - low_price) / low_price  # Normalized distance to low
+        return proximity_score
+    else:
+        return None  # No data available
+    
+
+def rank_tickers_by_proximity():
+    tickers_and_names = fetch_tickers_from_db()
+    proximity_scores = {}
+    
+    for ticker, name in tickers_and_names:
+        proximity_score = get_price_proximity(ticker)
+        
+        if proximity_score is not None:
+            proximity_scores[ticker] = proximity_score
+        else:
+            print(f"No data available for {ticker}")
+
+    # Sort tickers by proximity score (ascending order)
+    sorted_proximity = sorted(proximity_scores.items(), key=lambda x: x[1])
+
+    for ticker, score in sorted_proximity:
+        print(f"The proximity score for {ticker} is {score:.4f}")
+
+    return sorted_proximity
