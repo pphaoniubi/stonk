@@ -1,9 +1,9 @@
 import mysql.connector
 from mysql.connector import Error
 import yfinance as yf
-from io import StringIO
 import pandas as pd
 from sqlalchemy import create_engine, Table, MetaData, Column, String, Float, Integer, Date, select
+from datetime import datetime, timedelta
 
 db_password = '123456'
 def fetch_tickers_from_db():
@@ -36,7 +36,6 @@ def fetch_tickers_from_db():
 
 
 def fetch_and_store_data():
-
     # Connection and engine setup
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db', echo=True)
     metadata = MetaData()
@@ -86,6 +85,7 @@ def fetch_and_store_data():
     finally:
         connection.close()
 
+
 def fetch_data_for_ticker(ticker_symbol : str) -> pd.DataFrame:
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')
 
@@ -106,11 +106,24 @@ def fetch_data_for_ticker(ticker_symbol : str) -> pd.DataFrame:
         return rows
 
 
-def fetch_data_for_ticker_as_df(ticker_symbol : str) -> pd.DataFrame:
+def fetch_data_for_ticker_as_df(ticker_symbol : str, period : str) -> pd.DataFrame:
     records = fetch_data_for_ticker(ticker_symbol)
     # Convert records to a DataFrame
     df = pd.DataFrame(records, columns=['id', 'Ticker', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Name'])
-    df = df.dropna(subset=['Open'])
+    
+    # df = df.dropna(subset=['Open'])
     df['Date'] = pd.to_datetime(df['Date'])  # Ensure 'Date' is a datetime type
     df.set_index('Date', inplace=True)  # Set 'Date' as the index
+
+    if period == '6mo':
+        six_months_date = datetime.now() - timedelta(days=182)
+        df = df[df.index >= six_months_date]
+    
+    elif period == '3mo':
+        three_months_date = datetime.now() - timedelta(days=91)
+        df = df[df.index >= three_months_date]
+    elif period == '1mo':
+        one_months_date = datetime.now() - timedelta(days=30)
+        df = df[df.index >= one_months_date]
+
     return df

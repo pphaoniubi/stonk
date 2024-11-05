@@ -38,7 +38,7 @@ def read_root():
 
 @app.post("/stock/macd")
 def get_macd(request: StockRequest):
-    data = fetch_data_for_ticker_as_df(request.ticker)
+    data = fetch_data_for_ticker_as_df(request.ticker, request.period)
     if data.empty:
         raise HTTPException(status_code=404, detail="Stock data not found.")
     macd_data = calculate_macd(data)
@@ -47,7 +47,7 @@ def get_macd(request: StockRequest):
 
 @app.post("/stock/rsi")
 def get_rsi(request: StockRequest):
-    data = fetch_data_for_ticker_as_df(request.ticker)
+    data = fetch_data_for_ticker_as_df(request.ticker, request.period)
     if data.empty:
         raise HTTPException(status_code=404, detail="Stock data not found.")
     rsi_data = calculate_rsi(data)
@@ -56,7 +56,7 @@ def get_rsi(request: StockRequest):
 @app.post("/stock/macd-rsi")
 async def get_macd_graph(request: StockRequest):
 
-    data = fetch_data_for_ticker_as_df(request.ticker)
+    data = fetch_data_for_ticker_as_df(request.ticker, request.period)
     
     # Calculate MACD and plot
     macd_data = calculate_macd(data)
@@ -74,7 +74,7 @@ async def get_macd_graph(request: StockRequest):
 
 @app.post("/stock/high-low-current")
 async def get_high_low_current(request: StockRequest):
-    data = fetch_data_for_ticker_as_df(request.ticker)
+    data = fetch_data_for_ticker_as_df(request.ticker, request.period)
     print(data)
     # Calculate high, low, and current price for the period
     highest_price = float(data['High'].max())
@@ -87,7 +87,7 @@ async def get_high_low_current(request: StockRequest):
 @app.post("/stock/bollingerband")
 async def get_candlestick_chart(request: StockRequest):
     try:
-        data = fetch_data_for_ticker_as_df(request.ticker)
+        data = fetch_data_for_ticker_as_df(request.ticker, request.period)
         bollingerband_image = calculate_and_plot_bollinger_bands(data)
         # Return the image data
         return {"bollingerband_image": bollingerband_image}
@@ -101,8 +101,11 @@ async def get_candlestick_chart(request: StockRequest):
 @app.post("/stock/getReturns")
 async def getReturns():
     try:
-        returns = get_annual_return()
-        # Return the image data
+        sorted_returns = get_annual_return()
+
+        response_data = [{'ticker': ticker, 'return': ret} for ticker, ret in sorted_returns]
+    
+        return JSONResponse(content=response_data)
 
     except ValueError as ve:
         # Handle specific errors related to stock data

@@ -155,8 +155,6 @@ def constant_check(period, interval):
                 current_close = data['Close'].iloc[-1]
                 if current_close < low_threshold:
                     print(f"{stock} is below lowest * 1.05 -- current value is {current_close} --- 3 mo low is {lowest_close}")
-
-
         time.sleep(1800)
 
 def get_annual_return():
@@ -165,7 +163,7 @@ def get_annual_return():
     print(tickers_and_names)
     for ticker, name in tickers_and_names:
         # Fetch data
-        data = fetch_data_for_ticker_as_df(ticker)
+        data = fetch_data_for_ticker_as_df(ticker, period='1y')
         
         # Check if data is available
         if not data.empty:
@@ -181,10 +179,4 @@ def get_annual_return():
     # Sort the returns in descending order
     sorted_returns = sorted(returns.items(), key=lambda x: x[1], reverse=True)
 
-    # Display sorted results
-    for ticker, ret in sorted_returns:
-        if ret is not None:
-            print(f"The annual return for {ticker} is {ret:.2f}%")
-        else:
-            print(f"No return data available for {ticker}")
-
+    return sorted_returns
