@@ -180,3 +180,27 @@ def rank_tickers_by_proximity():
     sorted_proximity = sorted(proximity_scores.items(), key=lambda x: x[1])
 
     return sorted_proximity
+
+
+def get_rsi_ranking():
+    tickers_and_names = fetch_tickers_from_db()  # Fetch tickers from the database
+    rsi_data = []
+
+    for ticker, name in tickers_and_names:
+        # Fetch data for the ticker
+        data = fetch_data_for_ticker_as_df(ticker, period='1y')
+
+        # Check if data is available
+        if not data.empty:
+            rsi = calculate_rsi(data)  # Calculate the RSI for the ticker
+            rsi_data.append({
+                'ticker': ticker,
+                'rsi': rsi
+            })
+        else:
+            print(f"No data available for {ticker}")
+
+    # Sort tickers by RSI value from low to high
+    sorted_rsi = sorted(rsi_data, key=lambda x: x.get('rsi'))
+    print(sorted_rsi)
+    return sorted_rsi

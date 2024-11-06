@@ -102,10 +102,6 @@ async def get_candlestick_chart(request: StockRequest):
 async def getReturns():
     try:
         sorted_returns = get_annual_return()
-
-        # response_data = [{'ticker': ticker, 'annual_return': annual_ret, 'maximum_return': max_ret} for ticker, annual_ret, max_ret in sorted_returns]
-
-        print(sorted_returns)
         return JSONResponse(content=sorted_returns)
 
     except ValueError as ve:
@@ -134,3 +130,14 @@ async def getProximityRank():
     except Exception as e:
         # Handle generic errors
         raise HTTPException(status_code=500, detail=e)
+
+@app.post("/stock/getRSIRanking")
+async def get_rsi_ranking():
+    try:
+        sorted_rsi = get_rsi_ranking()
+        if sorted_rsi:
+            return JSONResponse(content=sorted_rsi)
+        else:
+            raise HTTPException(status_code=404, detail="No data available for RSI calculation")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
