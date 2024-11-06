@@ -215,4 +215,5 @@ def rank_tickers_by_proximity():
     for ticker, score in sorted_proximity:
         print(f"The proximity score for {ticker} is {score:.4f}")
 
+    print(sorted_proximity)
     return sorted_proximity

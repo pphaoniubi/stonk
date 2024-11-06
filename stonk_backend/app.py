@@ -115,12 +115,17 @@ async def getReturns():
         raise HTTPException(status_code=500, detail=e)
 
 
-@app.post("/stock/getClosestToLow")
-async def getReturns():
+@app.post("/stock/getProximityToLow")
+async def getProximityRank():
     try:
-        proximity_rank = rank_tickers_by_proximity()
+        ranked_tickers = rank_tickers_by_proximity()
 
-        return JSONResponse(content=proximity_rank)
+        results = [
+            {'ticker': ticker, 'proximity_rank': float(proximity_rank)}
+            for ticker, proximity_rank in ranked_tickers
+        ]
+
+        return {'ranked_proximity': results}
     
     except ValueError as ve:
         # Handle specific errors related to stock data
