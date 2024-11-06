@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 import yfinance as yf
 import pandas as pd
-from sqlalchemy import create_engine, Table, MetaData, Column, String, Float, Integer, Date, select
+from sqlalchemy import create_engine, Table, MetaData, Column, String, Float, Integer, Date, select, delete
 from datetime import datetime, timedelta
 
 db_password = '123456'
@@ -55,6 +55,11 @@ def fetch_and_store_data():
                       Column('Name', String(30)))
 
         metadata.create_all(engine)
+
+        connection.execute(delete(stonk))
+        transaction.commit()  # Commit the deletion before starting inserts
+        
+        transaction = connection.begin()
         tickers_and_names = fetch_tickers_from_db()
 
         for ticker, Name in tickers_and_names:
@@ -84,7 +89,6 @@ def fetch_and_store_data():
         print(f"Error updating data: {e}")
     finally:
         connection.close()
-
 
 def fetch_data_for_ticker(ticker_symbol : str) -> pd.DataFrame:
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')

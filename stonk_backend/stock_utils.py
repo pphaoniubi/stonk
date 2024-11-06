@@ -10,11 +10,6 @@ from db import *
 
 matplotlib.use("Agg")
 
-def get_stock_data(ticker: str, period: str = '1y', interval: str = '1d') -> pd.DataFrame:
-    stock = yf.Ticker(ticker)
-    data = stock.history(period=period, interval=interval)
-    return data
-
 
 def calculate_rsi(data: pd.DataFrame, window: int = 14):
     delta = data['Close'].diff()
@@ -97,26 +92,6 @@ def plot_rsi(data):
     return image_base64
 
 
-def check_rsi_below_30_yesterday(ticker, df):
-    # Calculate RSI
-    df = calculate_rsi(ticker, df)
-
-    # Get yesterday's RSI
-    if len(df) > 1:  # Ensure we have enough data points
-        yesterdays_rsi = df['RSI'].iloc[-2]
-        if yesterdays_rsi < 30:
-            print(f"({ticker})'s RSI ({yesterdays_rsi}) was below 30")
-        #else: 
-            #print(f"({ticker})'s RSI ({yesterdays_rsi}) was above 30")
-    else:
-        print("Not enough data to check yesterday's RSI.")
-
-def get_20_lowest(ticker, df):
-    lowest_prices_df = df.nsmallest(20, 'Close')
-    
-    print(f'{ticker}: 20 lowests:')
-    print(f'{lowest_prices_df['Close']}')
-
 def plot_macd_with_histogram(data):
     fig, ax = plt.subplots(figsize=(15, 6))
     
@@ -144,23 +119,10 @@ def plot_macd_with_histogram(data):
 
     return image_base64
 
-def constant_check(period, interval):
-    while (True):
-        stocks_i_hold = ["td.to", "etc-usd", "eth-usd", "ac.to"]
-        for stock in stocks_i_hold:
-                stock_data = yf.Ticker(stock)
-                data = stock_data.history(period, interval=interval)
-                lowest_close = data['Close'].min()
-                low_threshold = lowest_close * 1.05
-                current_close = data['Close'].iloc[-1]
-                if current_close < low_threshold:
-                    print(f"{stock} is below lowest * 1.05 -- current value is {current_close} --- 3 mo low is {lowest_close}")
-        time.sleep(1800)
 
 def get_annual_return():
     tickers_and_names = fetch_tickers_from_db()
-    returns = {}
-    print(tickers_and_names)
+    returns = []
     for ticker, name in tickers_and_names:
         # Fetch data
         data = fetch_data_for_ticker_as_df(ticker, period='1y')
@@ -168,19 +130,24 @@ def get_annual_return():
         # Check if data is available
         if not data.empty:
             # Calculate return
-            start_price = float(data['Close'].iloc[0])            ########
+            start_price = float(data['Close'].iloc[0])
             end_price = float(data['Close'].iloc[-1])
             annual_return = ((end_price - start_price) / start_price) * 100
-            returns[ticker] = annual_return
+            max_price = float(data['Close'].max())
+            min_price = float(data['Close'].min())
+            maximum_return = ((max_price - min_price) / min_price) * 100
+            returns.append({
+                'ticker': ticker,
+                'annual_return': annual_return,
+                'maximum_return': maximum_return
+            })
+
         else:
-            returns[ticker] = None
             print(f"No data available for {ticker}")
 
     # Sort the returns in descending order
-    sorted_returns = sorted(returns.items(), key=lambda x: x[1], reverse=True)
-
+    sorted_returns = sorted(returns, key=lambda x: x.get('annual_return', 0), reverse=True)
     return sorted_returns
-
 
 def get_price_proximity(ticker):
     # Fetch historical data for the ticker
@@ -212,8 +179,4 @@ def rank_tickers_by_proximity():
     # Sort tickers by proximity score (ascending order)
     sorted_proximity = sorted(proximity_scores.items(), key=lambda x: x[1])
 
-    for ticker, score in sorted_proximity:
-        print(f"The proximity score for {ticker} is {score:.4f}")
-
-    print(sorted_proximity)
     return sorted_proximity

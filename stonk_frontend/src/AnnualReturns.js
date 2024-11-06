@@ -46,6 +46,7 @@ const AnnualReturns = () => {
                 <th>Index</th>
                 <th>Ticker</th>
                 <th>Annual Return (%)</th>
+                <th>Maximum Return (%)</th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +54,8 @@ const AnnualReturns = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.ticker}</td>
-                  <td>{item.return ? `${item.return.toFixed(2)}%` : 'No data'}</td>
+                  <td>{item.annual_return ? `${item.annual_return.toFixed(2)}%` : 'No data'}</td>
+                  <td>{item.maximum_return ? `${item.maximum_return.toFixed(2)}%` : 'No data'}</td>
                 </tr>
               ))}
             </tbody>

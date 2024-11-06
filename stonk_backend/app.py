@@ -103,9 +103,10 @@ async def getReturns():
     try:
         sorted_returns = get_annual_return()
 
-        response_data = [{'ticker': ticker, 'return': ret} for ticker, ret in sorted_returns]
-    
-        return JSONResponse(content=response_data)
+        # response_data = [{'ticker': ticker, 'annual_return': annual_ret, 'maximum_return': max_ret} for ticker, annual_ret, max_ret in sorted_returns]
+
+        print(sorted_returns)
+        return JSONResponse(content=sorted_returns)
 
     except ValueError as ve:
         # Handle specific errors related to stock data
