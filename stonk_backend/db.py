@@ -65,6 +65,7 @@ def fetch_and_store_data():
         for ticker, Name in tickers_and_names:
             stock = yf.Ticker(ticker)
             data = stock.history(period="1y", interval="1d")
+            data = data.dropna()
             if data.empty:
                 print(f"No data returned for {ticker}")
                 continue

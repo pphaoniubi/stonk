@@ -141,3 +141,11 @@ async def get_rsi_ranking():
             raise HTTPException(status_code=404, detail="No data available for RSI calculation")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/stock/update")
+async def update():
+    try:
+        fetch_and_store_data()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

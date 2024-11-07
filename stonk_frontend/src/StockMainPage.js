@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MacdGraph from './MacdGraph';
+import axios from 'axios';
 
 const StockMainPage = () => {
 
@@ -26,6 +27,17 @@ const StockMainPage = () => {
         const [finalPeriod, setFinalPeriod] = useState(selectedPeriod);
         const [finalInterval, setFinalInterval] = useState(selectedInterval);
         const [searchQuery, setSearchQuery] = useState('');
+
+        const handleButtonClick = () => {
+          axios.post('http://localhost:8000/stock/update') // Replace with your actual API URL
+              .then(response => {
+                  console.log('Data fetched successfully:', response.data);
+                  // You can set this data to state or perform other actions
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+              });
+      };
       
         // Update filtered tickers based on search query
         useEffect(() => {
@@ -49,6 +61,7 @@ const StockMainPage = () => {
   return (
     <div>
     <h1>Stock Analysis Page</h1>
+    <button onClick={handleButtonClick}>Update</button>
     <form onSubmit={handleSubmit}>
       <label>
         Ticker Symbol:
