@@ -1,3 +1,4 @@
+import time
 import mysql.connector
 from mysql.connector import Error
 import yfinance as yf
@@ -82,7 +83,8 @@ def fetch_and_store_data():
                     Volume=int(row['Volume']),  # Ensure type consistency
                     Name=Name
                 )
-                connection.execute(insert_stmt) 
+                connection.execute(insert_stmt)
+            time.sleep(0.1)
         transaction.commit()
 
     except Exception as e:

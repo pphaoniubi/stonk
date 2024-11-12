@@ -4,6 +4,12 @@ create database stonk_db;
 
 use stonk_db;
 
+CREATE TABLE ticker (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Ticker VARCHAR(30),
+    Name VARCHAR(30)
+)
+
 CREATE TABLE stonk (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     Ticker VARCHAR(10),
@@ -16,7 +22,7 @@ CREATE TABLE stonk (
 	Name VARCHAR(30)
 );
 
-INSERT INTO stonk (ticker, name) VALUES
+INSERT INTO ticker (ticker, name) VALUES
     ('ETC-USD', 'Ethereum Classic (ETC)'),
     ('BTC-USD', 'Bitcoin (BTC)'),
     ('LTC-USD', 'Litecoin (LTC)'),
@@ -73,10 +79,15 @@ INSERT INTO stonk (ticker, name) VALUES
     ('ICP-USD', 'Internet Computer (ICP)'),
     ('NEAR-USD', 'Near Protocol (NEAR)'),
     ('ALGO-USD', 'Algorand (ALGO)'),
-    ('AAVE-USD', 'Aave (AAVE)');
+    ('AAVE-USD', 'Aave (AAVE)'),
+    ('PEPE24478-USD', 'PEPE Coin (PEPE)');
     
 
-select * from stonk;
+
+
+    
+
+"""select * from stonk;
 
   
 select * from stonk LIMIT 1000000;
@@ -87,5 +98,5 @@ SELECT
     ROUND((data_length + index_length) / 1024 / 1024, 2) AS `Size in MB`
 FROM information_schema.TABLES 
 WHERE table_schema = 'stonk_db'
-    AND table_name = 'stonk';
+    AND table_name = 'stonk';"""
     
