@@ -79,8 +79,7 @@ INSERT INTO ticker (ticker, name) VALUES
     ('ICP-USD', 'Internet Computer (ICP)'),
     ('NEAR-USD', 'Near Protocol (NEAR)'),
     ('ALGO-USD', 'Algorand (ALGO)'),
-    ('AAVE-USD', 'Aave (AAVE)'),
-    ('PEPE24478-USD', 'PEPE Coin (PEPE)');
+    ('AAVE-USD', 'Aave (AAVE)');
     
 
 

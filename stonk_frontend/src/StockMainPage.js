@@ -61,8 +61,7 @@ const StockMainPage = () => {
       { label: 'Internet Computer (ICP)', value: 'ICP-USD' },
       { label: 'Near Protocol (NEAR)', value: 'NEAR-USD' },
       { label: 'Algorand (ALGO)', value: 'ALGO-USD' },
-      { label: 'Aave (AAVE)', value: 'AAVE-USD' },
-      { label: 'PEPE Coin (PEPE)', value: 'PEPE-USD'}
+      { label: 'Aave (AAVE)', value: 'AAVE-USD' }
     ]);
         const [filteredTickers, setFilteredTickers] = useState(tickers);
         const [ticker, setTicker] = useState("ETC-USD");
