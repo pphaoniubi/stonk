@@ -5,11 +5,12 @@ function MacdGraph({ ticker, period, interval }) {
   const [rsiImage, setRsiImage] = useState(null);
   const [priceData, setPriceData] = useState(null);
   const [bollingerbandImage, setBollingerbandImage] = useState(null);
+  const [volumeImage, setVolumeImage] = useState(null);
 
 
   useEffect(() => {
 
-    async function fetchCandlestickChart() {
+    async function fetchBollingerband() {
       try {
         const response = await fetch("http://127.0.0.1:8000/stock/bollingerband", {
           method: "POST",
@@ -43,6 +44,24 @@ function MacdGraph({ ticker, period, interval }) {
       }
     }
 
+    // Fetch volume image
+    async function fetchVolumeImages() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/stock/getVolumeChart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ ticker: ticker })
+        });
+        const data = await response.json();
+        setVolumeImage(`data:image/png;base64,${data.volume_image}`);
+
+      } catch (error) {
+        console.error("Error fetching volume image:", error);
+      }
+    }
+
     // Fetch high, low, and current prices
     async function fetchHighLowCurrent() {
       try {
@@ -67,7 +86,8 @@ function MacdGraph({ ticker, period, interval }) {
     // Call both functions
     fetchMacdAndRsiImages();
     fetchHighLowCurrent();
-    fetchCandlestickChart();
+    fetchBollingerband();
+    fetchVolumeImages();
   }, [ticker, period, interval]);
 
   const calculateProgress = () => {
@@ -87,6 +107,7 @@ function MacdGraph({ ticker, period, interval }) {
       )}
       {macdImage ? <img src={macdImage} alt="MACD Graph" /> : <p>Loading MACD...</p>}
       {rsiImage ? <img src={rsiImage} alt="RSI Graph" /> : <p>Loading RSI...</p>}
+      {volumeImage ? <img src={volumeImage} alt="Volume Graph" /> : <p>Loading Volume...</p>}
 
       <h2>High, Low, and Current Price Progress for {ticker}</h2>
       {priceData ? (

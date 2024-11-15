@@ -149,3 +149,14 @@ async def update():
         fetch_and_store_data()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/stock/getVolumeChart")
+async def get_volume_chart(request: StockRequest):
+    try:
+        volume_image = get_past_30_volume(request.ticker)
+        return JSONResponse(content={
+        "volume_image": volume_image
+    })
+    except Exception as e: 
+        raise HTTPException(status_code=500, detail=str(e))

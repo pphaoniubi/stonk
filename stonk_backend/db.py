@@ -84,7 +84,7 @@ def fetch_and_store_data():
                     Name=Name
                 )
                 connection.execute(insert_stmt)
-            time.sleep(1.4)
+            time.sleep(0.4)
         transaction.commit()
 
     except Exception as e:
@@ -118,7 +118,6 @@ def fetch_data_for_ticker_as_df(ticker_symbol : str, period : str) -> pd.DataFra
     # Convert records to a DataFrame
     df = pd.DataFrame(records, columns=['id', 'Ticker', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Name'])
     
-    # df = df.dropna(subset=['Open'])
     df['Date'] = pd.to_datetime(df['Date'])  # Ensure 'Date' is a datetime type
     df.set_index('Date', inplace=True)  # Set 'Date' as the index
 

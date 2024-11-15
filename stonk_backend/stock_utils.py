@@ -204,3 +204,27 @@ def get_rsi_ranking():
     sorted_rsi = sorted(rsi_data, key=lambda x: x.get('rsi'))
     print(sorted_rsi)
     return sorted_rsi
+
+
+def get_past_30_volume(ticker: str):
+    data = fetch_data_for_ticker_as_df(ticker, period='1mo')
+    plt.figure(figsize=(15, 6))
+    plt.bar(data.index, data['Volume'], color='blue')
+    plt.title(f'Trading Volume for {ticker} - Last 30 Days')
+    plt.xlabel('Date')
+    plt.ylabel('Volume')
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.tight_layout()  # Adjust layout to make room for the x-axis labels
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)  # Go to the start of the BytesIO buffer
+    plt.close()  # Close the plot to free memory
+
+    # Convert the image to base64
+    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    # Return the base64 string to be sent to the controller
+    return img_base64
+
