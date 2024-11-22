@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+
+.navbar {
+  background-color: white; /* Change background color to white */
+  padding: 10px 20px;
+  text-align: center; /* Align text to the left */
+  border-bottom: 1px solid #999999;
+}
+
+.nav-link {
+  color: black; /* Change the font color to black */
+  text-decoration: none; /* Remove underlines from links */
+  margin: 0 15px; /* Add horizontal margin to separate links */
+  font-size: 22px; /* Set font size */
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  text-decoration: underline; /* Add underline on hover for visual feedback */
+}
