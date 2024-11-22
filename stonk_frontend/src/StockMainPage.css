@@ -1,0 +1,12 @@
+.light-blue-button {
+    background-color: #66ffff; /* Light blue color */
+    color: black;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .light-blue-button:hover {
+    opacity: 0.9; /* Optional hover effect */
+  }

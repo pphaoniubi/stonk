@@ -98,10 +98,9 @@ function MacdGraph({ ticker, period, interval }) {
 
   return (
     <div>
-      <h1>Candlestick Chart with Bollinger Bands</h1>
+      <h1 style={{ textAlign: 'center' }}>{ticker.toUpperCase()}</h1>
       {bollingerbandImage && (
         <div>
-          <h2>Chart for {ticker.toUpperCase()}</h2>
           <img src={bollingerbandImage} alt={`${ticker} candlestick chart`} />
         </div>
       )}

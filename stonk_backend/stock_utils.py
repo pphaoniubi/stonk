@@ -102,20 +102,19 @@ def plot_macd_with_histogram(data):
     # Plot Histogram
     ax.bar(data.index, data['Histogram'], color='green', alpha=0.5, label='Histogram', width=0.4)
 
-    ax.axhline(0, color='black', lw=1, linestyle='--')  # Add a horizontal line at 0
+    ax.axhline(0, color='black', lw=1, linestyle='--')
     ax.legend()
-    ax.set_title('MACD Indicator with Histogram')
+    ax.set_title('MACD')
     ax.set_xlabel('Date')
     ax.set_ylabel('MACD')
     
-    # Save the plot to a BytesIO buffer
     buffer = io.BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
 
-    # Encode the buffer to a base64 string
+
     image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-    plt.close(fig)  # Close the figure to free memory
+    plt.close(fig)
 
     return image_base64
 
@@ -124,12 +123,9 @@ def get_annual_return():
     tickers_and_names = fetch_tickers_from_db()
     returns = []
     for ticker, name in tickers_and_names:
-        # Fetch data
         data = fetch_data_for_ticker_as_df(ticker, period='1y')
-        
-        # Check if data is available
+
         if not data.empty:
-            # Calculate return
             start_price = float(data['Close'].iloc[0])
             end_price = float(data['Close'].iloc[-1])
             annual_return = ((end_price - start_price) / start_price) * 100
@@ -145,23 +141,19 @@ def get_annual_return():
         else:
             print(f"No data available for {ticker}")
 
-    # Sort the returns in descending order
     sorted_returns = sorted(returns, key=lambda x: x.get('annual_return', 0), reverse=True)
     return sorted_returns
 
 def get_price_proximity(ticker):
-    # Fetch historical data for the ticker
     data = fetch_data_for_ticker_as_df(ticker, period='1y')
     
     if not data.empty:
-        current_price = data['Close'].iloc[-1]  # Latest closing price
-        low_price = data['Close'].min()          # Lowest closing price over the period
-        
-        # Calculate the proximity score (the closer to the low, the better)
-        proximity_score = (current_price - low_price) / low_price  # Normalized distance to low
+        current_price = data['Close'].iloc[-1]
+        low_price = data['Close'].min()
+        proximity_score = (current_price - low_price) / low_price
         return proximity_score
     else:
-        return None  # No data available
+        return None 
     
 
 def rank_tickers_by_proximity():

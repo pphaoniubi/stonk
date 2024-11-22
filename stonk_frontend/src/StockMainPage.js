@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MacdGraph from './MacdGraph';
 import axios from 'axios';
+import './StockMainPage.css'
 
 const StockMainPage = () => {
 
@@ -72,19 +73,19 @@ const StockMainPage = () => {
   return (
     <div>
     <h1>Stock Analysis Page</h1>
-    <button onClick={handleButtonClick}>Update</button>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}  style={{ display: 'inline', marginRight: '25px' }}>
       <label>
-        Ticker Symbol:
-        {/* Search input */}
+        Ticker Symbol: 
+
         <input
           type="text"
           placeholder="Search tickers..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ marginLeft: '8px' }}
         />
         {/* Dropdown for filtered tickers */}
-        <select value={ticker} onChange={(e) => setTicker(e.target.value)}>
+        <select value={ticker} onChange={(e) => setTicker(e.target.value)} style={{ marginLeft: '5px' }}>
           {filteredTickers.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -192,8 +193,10 @@ const StockMainPage = () => {
           1 Month
         </label>
       </div>
-      <button type="submit">Submit</button>
+      <br/>
+      <button type="submit" className="light-blue-button">Submit</button>
     </form>
+    <button onClick={handleButtonClick} className="light-blue-button">Update</button>
     <MacdGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
   );

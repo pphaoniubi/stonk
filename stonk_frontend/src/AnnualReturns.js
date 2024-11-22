@@ -45,7 +45,7 @@ const AnnualReturns = () => {
 
   return (
     <div>
-      <h2>Annual Returns</h2>
+      <h2 style={{ textAlign: 'center' }}>Ranking</h2>
       <div style={{ display: 'flex', gap: '20px' }}>
         
         {/* Annual Returns Table */}
