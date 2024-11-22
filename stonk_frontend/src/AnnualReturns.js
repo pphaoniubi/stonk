@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './AnnualReturns.css'
 
 const AnnualReturns = () => {
   const [returns, setReturns] = useState([]);
@@ -8,7 +9,6 @@ const AnnualReturns = () => {
   const [rsiRanking, setRsiRanking] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the backend
     axios.post("http://localhost:8000/stock/getReturns")
       .then(response => {
         setReturns(response.data);
@@ -19,7 +19,6 @@ const AnnualReturns = () => {
         setLoading(false);
       });
 
-    // Fetch data from the backend
     axios.post("http://localhost:8000/stock/getProximityToLow")
       .then(response => {
         setProximity(response.data.ranked_proximity);
@@ -52,7 +51,7 @@ const AnnualReturns = () => {
         {/* Annual Returns Table */}
         <div style={{ flex: 1 }}>
           <h3>Annual Returns</h3>
-          <table>
+          <table  className="table">
             <thead>
               <tr>
                 <th>Index</th>
@@ -76,7 +75,7 @@ const AnnualReturns = () => {
 
         <div style={{ flex: 1 }}>
           <h3>Proximity Rank</h3>
-          <table>
+          <table  className="table">
             <thead>
               <tr>
                 <th>Index</th>
@@ -90,28 +89,6 @@ const AnnualReturns = () => {
                   <td>{index + 1}</td>
                   <td>{item.ticker}</td>
                   <td>{item.proximity_rank ? `${item.proximity_rank.toFixed(2)}` : 'No data'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div style={{ flex: 1 }}>
-          <h3>Proximity Rank</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Ticker</th>
-                <th>RSI Rank</th>
-              </tr>
-            </thead>
-            <tbody>
-              {proximity.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.ticker}</td>
-                  <td>{item.rsi ? `${item.proximity_rank.toFixed(2)}` : 'No data'}</td>
                 </tr>
               ))}
             </tbody>
