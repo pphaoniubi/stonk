@@ -160,3 +160,11 @@ async def get_volume_chart(request: StockRequest):
     })
     except Exception as e: 
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/stock/getVolumeRanking")
+async def get_volume_ranking():
+    try:
+        volume_ranking = calculate_volume_ranking()
+        return JSONResponse(content=volume_ranking)
+    except Exception as e: 
+        raise HTTPException(status_code=500, detail=str(e))

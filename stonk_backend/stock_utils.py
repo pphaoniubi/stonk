@@ -10,7 +10,6 @@ from db import *
 
 matplotlib.use("Agg")
 
-
 def calculate_rsi(data: pd.DataFrame, window: int = 14):
     delta = data['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
@@ -19,30 +18,22 @@ def calculate_rsi(data: pd.DataFrame, window: int = 14):
     data['RSI'] = 100 - (100 / (1 + rs))
     return data
 
-
 def calculate_macd(data: pd.DataFrame):
         # Calculate MACD and Signal line
     data['EMA_12'] = data['Close'].ewm(span=12, adjust=False).mean()
     data['EMA_26'] = data['Close'].ewm(span=26, adjust=False).mean()
     data['MACD'] = data['EMA_12'] - data['EMA_26']
     data['Signal'] = data['MACD'].ewm(span=9, adjust=False).mean()
-    data['Histogram'] = data['MACD'] - data['Signal']  # This is the histogram
+    data['Histogram'] = data['MACD'] - data['Signal']
     
-    # Drop helper columns to keep only necessary ones
     return data[['MACD', 'Signal', 'Histogram']]
 
 def calculate_and_plot_bollinger_bands(data: pd.DataFrame, window=20, num_of_std=2):
-    # Calculate the Simple Moving Average (SMA)
     data['SMA'] = data['Close'].rolling(window=window).mean()
-
-    # Calculate the standard deviation
     data['Std Dev'] = data['Close'].rolling(window=window).std()
-
-    # Calculate the upper and lower Bollinger Bands
     data['Upper Band'] = data['SMA'] + (data['Std Dev'] * num_of_std)
     data['Lower Band'] = data['SMA'] - (data['Std Dev'] * num_of_std)
 
-    # Plotting the close price and Bollinger Bands
     plt.figure(figsize=(15, 6))
     plt.plot(data['Close'], label='Close Price', color='blue', alpha=0.5)
     plt.plot(data['SMA'], label='20-Day SMA', color='orange', alpha=0.75)
@@ -56,18 +47,14 @@ def calculate_and_plot_bollinger_bands(data: pd.DataFrame, window=20, num_of_std
     plt.ylabel('Price')
     plt.legend()
 
-    # Save the figure to a BytesIO object
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
-    buffer.seek(0)  # Go to the start of the BytesIO buffer
-    plt.close()  # Close the plot to free memory
+    buffer.seek(0)
+    plt.close()
 
-    # Convert the image to base64
     img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-    
-    # Return the base64 string to be sent to the controller
-    return img_base64
 
+    return img_base64
 
 def plot_rsi(data):
     fig, ax = plt.subplots(figsize=(15, 6))
@@ -82,12 +69,12 @@ def plot_rsi(data):
     ax.set_xlabel('Date')
     ax.legend()
     
-    # Save the plot to a BytesIO buffer
+
     buffer = io.BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-    plt.close(fig)  # Close the figure to free memory
+    plt.close(fig)
     
     return image_base64
 
@@ -95,7 +82,6 @@ def plot_rsi(data):
 def plot_macd_with_histogram(data):
     fig, ax = plt.subplots(figsize=(15, 6))
     
-    # Plot MACD and Signal lines
     ax.plot(data['MACD'], label='MACD', color='blue')
     ax.plot(data['Signal'], label='Signal Line', color='orange')
 
@@ -168,23 +154,19 @@ def rank_tickers_by_proximity():
         else:
             print(f"No data available for {ticker}")
 
-    # Sort tickers by proximity score (ascending order)
     sorted_proximity = sorted(proximity_scores.items(), key=lambda x: x[1])
 
     return sorted_proximity
 
 
 def get_rsi_ranking():
-    tickers_and_names = fetch_tickers_from_db()  # Fetch tickers from the database
+    tickers_and_names = fetch_tickers_from_db()
     rsi_data = []
 
     for ticker, name in tickers_and_names:
-        # Fetch data for the ticker
         data = fetch_data_for_ticker_as_df(ticker, period='1y')
-
-        # Check if data is available
         if not data.empty:
-            rsi = calculate_rsi(data)  # Calculate the RSI for the ticker
+            rsi = calculate_rsi(data)
             rsi_data.append({
                 'ticker': ticker,
                 'rsi': rsi
@@ -192,7 +174,6 @@ def get_rsi_ranking():
         else:
             print(f"No data available for {ticker}")
 
-    # Sort tickers by RSI value from low to high
     sorted_rsi = sorted(rsi_data, key=lambda x: x.get('rsi'))
     print(sorted_rsi)
     return sorted_rsi
@@ -207,16 +188,40 @@ def get_past_30_volume(ticker: str):
     plt.ylabel('Volume')
     plt.xticks(rotation=45)
     plt.grid(True)
-    plt.tight_layout()  # Adjust layout to make room for the x-axis labels
+    plt.tight_layout()
 
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
-    buffer.seek(0)  # Go to the start of the BytesIO buffer
-    plt.close()  # Close the plot to free memory
+    buffer.seek(0)
+    plt.close()
 
-    # Convert the image to base64
     img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     
-    # Return the base64 string to be sent to the controller
     return img_base64
 
+def calculate_volume_ranking():
+    tickers_and_names = fetch_tickers_from_db()
+
+    volume_percentage_lst = []
+
+    for ticker, name in tickers_and_names:
+        data = fetch_data_for_ticker_as_df(ticker, period='1mo')
+        average_volume = data['Volume'].mean()
+        latest_volume = data['Volume'].iloc[-1]
+
+        if average_volume == 0:
+            return "Average volume is zero, cannot calculate percentage difference."
+        
+        volume_percentage = ((latest_volume - average_volume) / average_volume) * 100
+
+        volume_percentage_lst.append({
+                'ticker': ticker,
+                'volume_percentage': float(volume_percentage)
+        })
+
+
+    sorted_volume_precentage = sorted(volume_percentage_lst, key=lambda x: x.get('volume_percentage'), reverse=True)
+    print(sorted_volume_precentage)
+    return sorted_volume_precentage
+
+calculate_volume_ranking()
