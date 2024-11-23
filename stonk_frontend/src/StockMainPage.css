@@ -1,12 +1,53 @@
 .light-blue-button {
     background-color: #66ffff; /* Light blue color */
     color: black;
-    padding: 10px 12px;
+    padding: 10px 16px;
     border: none;
     border-radius: 5px;
+    font-size: 20px; 
     cursor: pointer;
   }
   
   .light-blue-button:hover {
     opacity: 0.9; /* Optional hover effect */
+  }
+
+  .search-bar {
+    padding: 15px; /* Increase padding */
+    font-size: 16px; /* Larger font */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light border */
+    width: 300px; /* Adjust width */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    transition: all 0.3s ease; /* Smooth hover/focus effects */
+  }
+  
+  .search-bar:focus {
+    outline: none; /* Remove default blue outline */
+    border-color: #6495ED; /* Change border color on focus */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhance shadow on focus */
+  }
+
+  .select-dropdown {
+    padding: 16px; /* Add padding for larger click area */
+    font-size: 16px; /* Match font size with the search bar */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light gray border */
+    margin-left: 10px; /* Spacing from other elements */
+    background-color: white; /* White background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for modern look */
+    appearance: none; /* Remove native dropdown styles */
+    transition: all 0.3s ease;
+  }
+  
+  .select-dropdown:focus {
+    outline: none; /* Remove default outline */
+    border-color: #6495ED; /* Highlight border on focus */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow on focus */
+  }
+
+  .ticker-label {
+    font-size: 20px; /* Larger font size */
+    font-weight: bold; /* Make the text bold */
+    color: black; /* Optional: Change color for emphasis */
   }

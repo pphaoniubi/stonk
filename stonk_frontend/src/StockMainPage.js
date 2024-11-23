@@ -75,17 +75,17 @@ const StockMainPage = () => {
     <h1>Stock Analysis Page</h1>
     <form onSubmit={handleSubmit}  style={{ display: 'inline', marginRight: '25px' }}>
       <label>
-        Ticker Symbol: 
-
+        <span className="ticker-label">Ticker Symbol:</span>
         <input
           type="text"
           placeholder="Search tickers..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ marginLeft: '8px' }}
+          className="search-bar"
         />
         {/* Dropdown for filtered tickers */}
-        <select value={ticker} onChange={(e) => setTicker(e.target.value)} style={{ marginLeft: '5px' }}>
+        <select value={ticker} onChange={(e) => setTicker(e.target.value)} className="select-dropdown">
           {filteredTickers.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
