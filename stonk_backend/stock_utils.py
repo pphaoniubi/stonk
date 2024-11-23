@@ -181,7 +181,7 @@ def get_rsi_ranking():
 
 def get_past_30_volume(ticker: str):
     data = fetch_data_for_ticker_as_df(ticker, period='1mo')
-    plt.figure(figsize=(15, 6))
+    plt.figure(figsize=(12.4, 6))
     plt.bar(data.index, data['Volume'], color='blue')
     plt.title(f'Trading Volume for {ticker} - Last 30 Days')
     plt.xlabel('Date')

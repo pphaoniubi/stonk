@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./MacdGraph.css"
 
 function MacdGraph({ ticker, period, interval }) {
   const [macdImage, setMacdImage] = useState(null);
@@ -99,15 +100,12 @@ function MacdGraph({ ticker, period, interval }) {
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>{ticker.toUpperCase()}</h1>
-      {bollingerbandImage && (
-        <div>
-          <img src={bollingerbandImage} alt={`${ticker} candlestick chart`} />
-        </div>
-      )}
+      <div className="image-container">
+      {bollingerbandImage ? <img src={bollingerbandImage}/> : <p>Loading Bollinger...</p>}
       {macdImage ? <img src={macdImage} alt="MACD Graph" /> : <p>Loading MACD...</p>}
       {rsiImage ? <img src={rsiImage} alt="RSI Graph" /> : <p>Loading RSI...</p>}
       {volumeImage ? <img src={volumeImage} alt="Volume Graph" /> : <p>Loading Volume...</p>}
-
+      </div>
       <h2>High, Low, and Current Price Progress for {ticker}</h2>
       {priceData ? (
         <div style={{ width: "100%", marginTop: "20px" }}>
