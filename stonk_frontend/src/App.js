@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import AnnualReturns from './AnnualReturns';
+import Ranking from './Ranking';
 import StockMainPage from './StockMainPage';
 import "./App.css"
 
@@ -10,12 +10,12 @@ function App() {
       <div>
       <nav className="navbar">
         <Link to="/" className="nav-link">Home</Link>
-        <Link to="/annual-returns" className="nav-link">Annual Returns</Link>
+        <Link to="/ranking" className="nav-link">Ranking</Link>
       </nav>
         
         <Routes>
           <Route path="/" element={<StockMainPage />} />
-          <Route path="/annual-returns" element={<AnnualReturns />} />
+          <Route path="/ranking" element={<Ranking />} />
         </Routes>
       </div>
     </Router>

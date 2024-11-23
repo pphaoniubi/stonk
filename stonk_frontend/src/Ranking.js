@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './AnnualReturns.css'
+import './Ranking.css'
 
-const AnnualReturns = () => {
+const Ranking = () => {
   const [returns, setReturns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [proximity, setProximity] = useState([]);
@@ -99,4 +99,4 @@ const AnnualReturns = () => {
   );
 };
 
-export default AnnualReturns;
+export default Ranking;
