@@ -112,7 +112,7 @@ function MacdGraph({ ticker, period, interval }) {
           <div style={{ background: "#ccc", borderRadius: "5px", height: "30px", position: "relative" }}>
             <div
               style={{
-                width: `${calculateProgress()}%`,
+                width: `${calculateProgress()}%`, 
                 background: "#4caf50",
                 height: "100%",
                 borderRadius: "5px 0 0 5px"
