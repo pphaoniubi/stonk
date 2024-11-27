@@ -189,3 +189,10 @@ async def get_stock_fundamental(request: StockRequest):
     except Exception as e: 
         raise HTTPException(status_code=500, detail=str(e))
     
+@app.post("/stock/stockAllFundamentals")
+async def get_all_stock_fundamentals():
+    try:
+        fundamentals = get_all_fundamentals()
+        return JSONResponse(content=fundamentals)
+    except Exception as e: 
+        raise HTTPException(status_code=500, detail=str(e))

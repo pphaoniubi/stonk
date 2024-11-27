@@ -6,7 +6,7 @@ import pandas as pd
 from sqlalchemy import create_engine, Table, MetaData, Column, String, Float, Integer, Date, select, delete
 from datetime import datetime, timedelta
 
-db_password = '123456'
+db_password = '12345678pP!'
 def fetch_tickers_from_db():
     try:
         # Connect to your MySQL database
