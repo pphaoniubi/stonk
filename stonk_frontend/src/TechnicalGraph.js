@@ -130,7 +130,7 @@ function TechnicalGraph({ ticker, period, interval }) {
                   <th>P/E Ratio</th>
                   <th>EPS</th>
                   <th>Dividend Yield</th>
-                  <th>Market Cap</th>
+                  <th>Market Cap (millions)</th>
               </tr>
           </thead>
           <tbody>
@@ -138,7 +138,7 @@ function TechnicalGraph({ ticker, period, interval }) {
               <td>{fundamental?.pe_ratio || 'N/A'}</td>
               <td>{fundamental?.eps || 'N/A'}</td>
               <td>{fundamental?.dividend_yield || 'N/A'}</td>
-              <td>{fundamental?.market_cap || 'N/A'}</td>
+              <td>{fundamental?.market_cap.toLocaleString() || 'N/A'}</td>
               </tr>
           </tbody>
       </table>

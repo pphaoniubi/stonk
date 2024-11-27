@@ -35,7 +35,7 @@ def fetch_and_store_fundamental():
                 'PE_Ratio': info.get('trailingPE'),
                 'EPS': info.get('trailingEps'),
                 'Dividend_Yield': info.get('dividendYield'),
-                'Market_Cap': info.get('marketCap'),
+                'Market_Cap': info.get('marketCap')/1000000,
                 'Name': name
             }
 
