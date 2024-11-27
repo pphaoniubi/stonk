@@ -13,4 +13,7 @@ python -m uvicorn app:app --reload<br><br><br>
 TODO: <br>
 Yesterday's top gainer<br>
 Yesterday's top loser<br>
-1 hour interval functionality<br><br><br>
+1 hour interval functionality<br>
+CLosest to lower bollinger rank<br>
+Fundamental Info display<br>
+Fundamental Rank<br><br><br>
