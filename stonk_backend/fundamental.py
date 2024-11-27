@@ -1,7 +1,7 @@
 import yfinance as yf
 import time
 from db import *
-from sqlalchemy.sql import insert
+from sqlalchemy.sql import insert, desc
 
 
 def fetch_and_store_fundamental():
@@ -84,7 +84,7 @@ def get_all_fundamentals():
 
     # Reflect the table from the database
     stonk_fundamental = Table('stonk_fundamental', metadata, autoload_with=engine)
-    query = select(stonk_fundamental)
+    query = select(stonk_fundamental).order_by(desc(stonk_fundamental.c.Market_Cap))
 
     with engine.connect() as connection:
         result = connection.execute(query)
