@@ -41,7 +41,6 @@ def fetch_and_store_data():
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db', echo=True)
     metadata = MetaData()
     connection = engine.connect()
-    transaction = connection.begin()
 
     try:
         stonk = Table('stonk', metadata,
@@ -83,7 +82,7 @@ def fetch_and_store_data():
                     Volume=int(row['Volume']),  # Ensure type consistency
                     Name=Name
                 )
-                connection.execute(insert_stmt)
+            connection.execute(insert_stmt)
             time.sleep(0.3)
         transaction.commit()
 

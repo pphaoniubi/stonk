@@ -206,6 +206,9 @@ def calculate_volume_ranking():
 
     for ticker, name in tickers_and_names:
         data = fetch_data_for_ticker_as_df(ticker, period='1mo')
+        if data.empty:
+            print("Data is empty. No volume data to process.")
+            return
         average_volume = data['Volume'].mean()
         latest_volume = data['Volume'].iloc[-1]
 
@@ -223,5 +226,3 @@ def calculate_volume_ranking():
     sorted_volume_precentage = sorted(volume_percentage_lst, key=lambda x: x.get('volume_percentage'), reverse=True)
     print(sorted_volume_precentage)
     return sorted_volume_precentage
-
-calculate_volume_ranking()
