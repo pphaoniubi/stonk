@@ -86,7 +86,7 @@ async def get_high_low_current(request: StockRequest):
 
 
 @app.post("/stock/bollingerband")
-async def get_candlestick_chart(request: StockRequest):
+async def get_bollingerband(request: StockRequest):
     try:
         data = fetch_data_for_ticker_as_df(request.ticker, request.period)
         bollingerband_image = calculate_and_plot_bollinger_bands(data)
@@ -148,6 +148,7 @@ async def get_rsi_ranking():
 async def update():
     try:
         fetch_and_store_data()
+        fetch_and_store_fundamental()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
@@ -187,3 +188,4 @@ async def get_stock_fundamental(request: StockRequest):
         return JSONResponse(content=fundamental_data)
     except Exception as e: 
         raise HTTPException(status_code=500, detail=str(e))
+    

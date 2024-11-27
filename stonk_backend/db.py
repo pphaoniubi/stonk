@@ -41,6 +41,7 @@ def fetch_and_store_data():
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db', echo=True)
     metadata = MetaData()
     connection = engine.connect()
+    transaction = connection.begin()
 
     try:
         stonk = Table('stonk', metadata,
@@ -59,7 +60,6 @@ def fetch_and_store_data():
         connection.execute(delete(stonk))
         transaction.commit()  # Commit the deletion before starting inserts
         
-        transaction = connection.begin()
         tickers_and_names = fetch_tickers_from_db()
 
         for ticker, Name in tickers_and_names:
