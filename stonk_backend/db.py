@@ -59,7 +59,8 @@ def fetch_and_store_data():
 
         connection.execute(delete(stonk))
         transaction.commit()  # Commit the deletion before starting inserts
-        
+
+        transaction = connection.begin()
         tickers_and_names = fetch_tickers_from_db()
 
         for ticker, Name in tickers_and_names:
@@ -82,10 +83,9 @@ def fetch_and_store_data():
                     Volume=int(row['Volume']),  # Ensure type consistency
                     Name=Name
                 )
-            connection.execute(insert_stmt)
+                connection.execute(insert_stmt)
             time.sleep(0.3)
         transaction.commit()
-
     except Exception as e:
         transaction.rollback()
         print(f"Error updating data: {e}")

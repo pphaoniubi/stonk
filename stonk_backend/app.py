@@ -148,7 +148,7 @@ async def get_rsi_ranking():
 async def update():
     try:
         fetch_and_store_data()
-        fetch_and_store_fundamental()
+        # fetch_and_store_fundamental()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
