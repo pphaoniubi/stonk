@@ -23,17 +23,12 @@ def fetch_and_store_fundamental():
         metadata.create_all(engine)
 
         connection.execute(delete(stonk_fundamental))
-        
-
+    
         tickers_and_names = fetch_tickers_from_db()
 
         for ticker, name in tickers_and_names:
             stock = yf.Ticker(ticker)
             info = stock.info
-
-            if not info:
-                print(f"No data returned for {ticker}")
-                continue
             
             data = {
                 'Ticker': ticker,
@@ -45,6 +40,10 @@ def fetch_and_store_fundamental():
             }
 
             data = {k: v for k, v in data.items() if v is not None}
+
+            if not data:
+                print(f"No data returned for {ticker}")
+                continue
 
             stmt = insert(stonk_fundamental).values(data)
             connection.execute(stmt)
