@@ -31,7 +31,7 @@ function FundamentalPage() {
 
     return (
         <div>
-            <h1>Stock Fundamentals (Descnding order market capital)</h1>
+            <h1>Stock Fundamentals (sort by market cap)</h1>
             {error ? (
                 <p style={{ color: "red" }}>{error}</p>
             ) : isLoading ? (
