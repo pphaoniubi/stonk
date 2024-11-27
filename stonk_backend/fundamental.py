@@ -57,4 +57,23 @@ def fetch_and_store_fundamental():
     finally:
         connection.close()
 
-fetch_and_store_fundamental()
+def get_fundamental_for_ticker(ticker):
+
+    engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')
+
+    # Bind metadata to the existing database
+    metadata = MetaData()
+
+    # Reflect the table from the database
+    stonk_fundamental = Table('stonk_fundamental', metadata, autoload_with=engine)
+
+    # Create a select statement
+    query = select(stonk_fundamental).where(stonk_fundamental.c.Ticker == ticker)
+
+    # Execute the query
+    with engine.connect() as connection:
+        result = connection.execute(query)
+        # Fetch all results
+        row = result.fetchone()
+        return row
+    

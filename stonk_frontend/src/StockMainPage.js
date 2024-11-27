@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MacdGraph from './MacdGraph';
+import TechnicalGraph from './TechnicalGraph';
 import axios from 'axios';
 import './StockMainPage.css'
 
@@ -197,7 +197,7 @@ const StockMainPage = () => {
       <button type="submit" className="light-blue-button">Submit</button>
     </form>
     <button onClick={handleButtonClick} className="light-blue-button">Update</button>
-    <MacdGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
+    <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
   );
 

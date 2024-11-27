@@ -1,16 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import "./MacdGraph.css"
+import "./TechnicalGraph.css"
 
-function MacdGraph({ ticker, period, interval }) {
+function TechnicalGraph({ ticker, period, interval }) {
   const [macdImage, setMacdImage] = useState(null);
   const [rsiImage, setRsiImage] = useState(null);
   const [priceData, setPriceData] = useState(null);
   const [bollingerbandImage, setBollingerbandImage] = useState(null);
   const [volumeImage, setVolumeImage] = useState(null);
+  const [fundamental, setFundamental] = useState(null);
 
 
   useEffect(() => {
 
+    async function fetchFundamental() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/stock/stockFundamental", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ ticker: ticker })
+        });
+        const data = await response.json();
+        setFundamental({
+          pe_ratio: data.pe_ratio,
+          eps: data.eps,
+          dividend_yield: data.dividend_yield,
+          market_cap: data.market_cap
+      })
+      } catch (error) {
+        console.error("Error fetching chart:", error);
+      }
+
+    };
     async function fetchBollingerband() {
       try {
         const response = await fetch("http://127.0.0.1:8000/stock/bollingerband", {
@@ -84,7 +106,7 @@ function MacdGraph({ ticker, period, interval }) {
       }
     }
 
-    // Call both functions
+    fetchFundamental()
     fetchMacdAndRsiImages();
     fetchHighLowCurrent();
     fetchBollingerband();
@@ -97,9 +119,29 @@ function MacdGraph({ ticker, period, interval }) {
     return ((current - lowest) / (highest - lowest)) * 100;
   };
 
+
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>{ticker.toUpperCase()}</h1>
+      <table className="fundamental-table">
+          <thead>
+              <tr>
+                  <th>P/E Ratio</th>
+                  <th>EPS</th>
+                  <th>Dividend Yield</th>
+                  <th>Market Cap</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+              <td>{fundamental?.pe_ratio || 'N/A'}</td>
+              <td>{fundamental?.eps || 'N/A'}</td>
+              <td>{fundamental?.dividend_yield || 'N/A'}</td>
+              <td>{fundamental?.market_cap || 'N/A'}</td>
+              </tr>
+          </tbody>
+      </table>
       <div className="image-container">
       {bollingerbandImage ? <img src={bollingerbandImage}/> : <p>Loading Bollinger...</p>}
       {macdImage ? <img src={macdImage} alt="MACD Graph" /> : <p>Loading MACD...</p>}
@@ -143,4 +185,4 @@ function MacdGraph({ ticker, period, interval }) {
   );
 }
 
-export default MacdGraph;
+export default TechnicalGraph;

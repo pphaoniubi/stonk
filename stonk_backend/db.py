@@ -123,7 +123,6 @@ def fetch_data_for_ticker_as_df(ticker_symbol : str, period : str) -> pd.DataFra
     if period == '6mo':
         six_months_date = datetime.now() - timedelta(days=182)
         df = df[df.index >= six_months_date]
-    
     elif period == '3mo':
         three_months_date = datetime.now() - timedelta(days=91)
         df = df[df.index >= three_months_date]

@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import Optional
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fundamental import *
 
 
 app = FastAPI()
@@ -166,5 +167,23 @@ async def get_volume_ranking():
     try:
         volume_ranking = calculate_volume_ranking()
         return JSONResponse(content=volume_ranking)
+    except Exception as e: 
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/stock/stockFundamental")
+async def get_stock_fundamental(request: StockRequest):
+    try:
+        fundamental = get_fundamental_for_ticker(request.ticker)
+        fundamental_data = {
+            "id": fundamental[0],
+            "ticker": fundamental[1],
+            "pe_ratio": fundamental[2],
+            "eps": fundamental[3],
+            "dividend_yield": fundamental[4],
+            "market_cap": fundamental[5],
+            "name": fundamental[6]
+        }
+        return JSONResponse(content=fundamental_data)
     except Exception as e: 
         raise HTTPException(status_code=500, detail=str(e))
