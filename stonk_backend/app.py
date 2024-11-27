@@ -1,7 +1,7 @@
 # app.py
 
 from fastapi import FastAPI, HTTPException
-from stock_utils import *
+from technical import *
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.responses import JSONResponse
