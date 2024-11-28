@@ -1,6 +1,7 @@
-.table {
+  .table {
     border-collapse: collapse;
-    width: 100%;
+    width: 60%;
+    margin: 0 auto;
   }
   
   /* Header and Cell Borders */
@@ -13,5 +14,6 @@
   
   /* Optional: Header Background Color */
   .table th {
-    background-color: #f2f2f2;
+    background-color: #4CAF50;
+    color: white;
   }

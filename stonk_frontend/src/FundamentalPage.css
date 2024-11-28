@@ -1,0 +1,25 @@
+.table-container {
+      width: 50%;
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+  
+  
+  .table-container th {
+    background-color: #4CAF50; /* Add background color */
+    color: white;             /* Make text color white for contrast */
+    padding: 15px;            /* Increase padding to make it bigger */
+    text-align: left;         /* Align text to the left */
+    font-size: 16px;          /* Adjust font size if needed */
+    border: 1px solid #ddd;   /* Add border for better visuals */
+  }
+  
+  .table-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  h1 {
+    text-align: center; /* Centers the text horizontally */
+    margin: 30px 0;     /* Adds some vertical spacing (optional) */
+  }

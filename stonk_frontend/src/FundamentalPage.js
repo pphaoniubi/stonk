@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./FundamentalPage.css"
 
 function FundamentalPage() {
     const [fundamentals, setFundamentals] = useState([]);
@@ -37,7 +38,7 @@ function FundamentalPage() {
             ) : isLoading ? (
                 <p>Loading...</p>
             ) : fundamentals.length > 0 ? (
-                <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+                <table border="1" class="table-container">
                     <thead>
                         <tr>
                             {Object.keys(fundamentals[0]).map((key) => (
