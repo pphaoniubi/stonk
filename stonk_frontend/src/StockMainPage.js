@@ -40,16 +40,25 @@ const StockMainPage = () => {
         const [finalInterval, setFinalInterval] = useState(selectedInterval);
         const [searchQuery, setSearchQuery] = useState('');
 
-        const handleButtonClick = () => {
+        const handleUpdateClick = () => {
           axios.post('http://localhost:8000/stock/update') // Replace with your actual API URL
               .then(response => {
                   console.log('Data fetched successfully:', response.data);
-                  // You can set this data to state or perform other actions
               })
               .catch(error => {
                   console.error('Error fetching data:', error);
               });
-      };
+        };
+        const handleUpdateClickFund = () => {
+          axios.post('http://localhost:8000/stock/updateFundamental') // Replace with your actual API URL
+              .then(response => {
+                  console.log('Data fetched successfully:', response.data);
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+              });
+        };
+      
       
         // Update filtered tickers based on search query
         useEffect(() => {
@@ -196,7 +205,8 @@ const StockMainPage = () => {
       <br/>
       <button type="submit" className="light-blue-button">Submit</button>
     </form>
-    <button onClick={handleButtonClick} className="light-blue-button">Update</button>
+    <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
+    <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
     <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
   );

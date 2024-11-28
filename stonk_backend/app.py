@@ -152,6 +152,13 @@ async def update():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
+@app.post("/stock/updateFundamental")
+async def update():
+    try:
+        fetch_and_store_fundamental()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 
 @app.post("/stock/getVolumeChart")
 async def get_volume_chart(request: StockRequest):
