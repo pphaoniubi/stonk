@@ -130,7 +130,7 @@ function TechnicalGraph({ ticker, period, interval }) {
                   <th>P/E Ratio</th>
                   <th>EPS</th>
                   <th>Dividend Yield</th>
-                  <th>Market Cap (millions)</th>
+                  <th>Market Cap (billions)</th>
               </tr>
           </thead>
           <tbody>
