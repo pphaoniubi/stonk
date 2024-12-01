@@ -28,16 +28,6 @@ const Ranking = () => {
         console.error("Error fetching proximity data:", error);
         setLoading(false);
       });
-
-      axios.post("http://localhost:8000/stock/getRSIRanking")
-      .then(response => {
-        setRsiRanking(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Error fetching rsi data:", error);
-        setLoading(false);
-      });
   }, []);
   
 
