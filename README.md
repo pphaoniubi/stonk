@@ -7,7 +7,7 @@ backend:<br>
 pip install fastapi pydantic pandas yfinance matplotlib mysql.connector uvicorn sqlalchemy pymysql cryptography <br>
 uvicorn app:app --reload <br>
 OR <br>
-python -m uvicorn app:app --reload<br><br><br>
+python3 -m uvicorn app:app --reload<br><br><br>
 
 
 TODO: <br>
