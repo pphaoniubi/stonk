@@ -76,7 +76,6 @@ async def get_macd_graph(request: StockRequest):
 @app.post("/stock/high-low-current")
 async def get_high_low_current(request: StockRequest):
     data = fetch_data_for_ticker_as_df(request.ticker, request.period)
-    print(data)
     # Calculate high, low, and current price for the period
     highest_price = float(data['High'].max())
     lowest_price = float(data['Low'].min())

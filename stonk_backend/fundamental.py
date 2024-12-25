@@ -48,7 +48,7 @@ def fetch_and_store_fundamental():
             stmt = insert(stonk_fundamental).values(data)
             connection.execute(stmt)
 
-            time.sleep(0.3)
+            time.sleep(0.1)
         connection.commit()
 
     except Exception as e:

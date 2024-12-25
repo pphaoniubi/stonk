@@ -175,7 +175,6 @@ def get_rsi_ranking():
             print(f"No data available for {ticker}")
 
     sorted_rsi = sorted(rsi_data, key=lambda x: x.get('rsi'))
-    print(sorted_rsi)
     return sorted_rsi
 
 
@@ -224,5 +223,4 @@ def calculate_volume_ranking():
 
 
     sorted_volume_precentage = sorted(volume_percentage_lst, key=lambda x: x.get('volume_percentage'), reverse=True)
-    print(sorted_volume_precentage)
     return sorted_volume_precentage
