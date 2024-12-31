@@ -34,15 +34,16 @@ const StockMainPage = () => {
         const [filteredTickers, setFilteredTickers] = useState(tickers);
         const [ticker, setTicker] = useState("ETH-USD");
         const [submittedTicker, setSubmittedTicker] = useState("ETH-USD");
-        const [selectedPeriod, setSelectedPeriod] = useState('1y'); // Default period
-        const [selectedInterval, setSelectedInterval] = useState('1d'); // Default interval
+        const [selectedPeriod, setSelectedPeriod] = useState('1y');
+        const [selectedInterval, setSelectedInterval] = useState('1d');
         const [finalPeriod, setFinalPeriod] = useState(selectedPeriod);
         const [finalInterval, setFinalInterval] = useState(selectedInterval);
         const [searchQuery, setSearchQuery] = useState('');
         const [doneMessage, setDoneMessage] = useState("");
+        const [doneMessageFund, setDoneMessageFund] = useState("");
 
         const handleUpdateClick = () => {
-          axios.post('http://localhost:8000/stock/update') // Replace with your actual API URL
+          axios.post('http://localhost:8000/stock/update')
               .then(response => {
                   setDoneMessage(response.data.message);
                   setTimeout(() => {
@@ -56,7 +57,10 @@ const StockMainPage = () => {
         const handleUpdateClickFund = () => {
           axios.post('http://localhost:8000/stock/updateFundamental') // Replace with your actual API URL
               .then(response => {
-                  console.log('Data fetched successfully:', response.data);
+                setDoneMessageFund(response.data.message);
+                setTimeout(() => {
+                  setDoneMessageFund("");
+                }, 3000);
               })
               .catch(error => {
                   console.error('Error fetching data:', error);
@@ -211,7 +215,10 @@ const StockMainPage = () => {
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
     {doneMessage && <div style={{ fontSize: "20px", color: "green" }}>{doneMessage}</div>}
+    
     <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
+    {doneMessageFund && <div style={{ fontSize: "20px", color: "green" }}>{doneMessageFund}</div>}
+    
     <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
   );
