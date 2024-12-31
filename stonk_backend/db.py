@@ -84,7 +84,7 @@ def fetch_and_store_data():
                     Name=Name
                 )
                 connection.execute(insert_stmt)
-            time.sleep(0.3)
+            time.sleep(0.1)
         transaction.commit()
     except Exception as e:
         transaction.rollback()

@@ -39,12 +39,16 @@ const StockMainPage = () => {
         const [finalPeriod, setFinalPeriod] = useState(selectedPeriod);
         const [finalInterval, setFinalInterval] = useState(selectedInterval);
         const [searchQuery, setSearchQuery] = useState('');
+        const [doneMessage, setDoneMessage] = useState("");
 
         const handleUpdateClick = () => {
           axios.post('http://localhost:8000/stock/update') // Replace with your actual API URL
               .then(response => {
-                  console.log('Data fetched successfully:', response.data);
-              })
+                  setDoneMessage(response.data.message);
+                  setTimeout(() => {
+                    setDoneMessage("");
+                  }, 3000);
+                })
               .catch(error => {
                   console.error('Error fetching data:', error);
               });
@@ -206,6 +210,7 @@ const StockMainPage = () => {
       <button type="submit" className="light-blue-button">Submit</button>
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
+    {doneMessage && <div style={{ fontSize: "20px", color: "green" }}>{doneMessage}</div>}
     <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
     <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
