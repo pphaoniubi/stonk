@@ -58,9 +58,7 @@ def fetch_and_store_data():
         metadata.create_all(engine)
 
         connection.execute(delete(stonk))
-        transaction.commit()  # Commit the deletion before starting inserts
 
-        transaction = connection.begin()
         tickers_and_names = fetch_tickers_from_db()
 
         for ticker, Name in tickers_and_names:
