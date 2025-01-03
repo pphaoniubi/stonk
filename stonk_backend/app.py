@@ -147,7 +147,7 @@ async def get_rsi_ranking():
 async def update():
     try:
         fetch_and_store_data()
-        return {"message": "Done"}
+        return {"message": "Stock historical prices updated"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
@@ -155,7 +155,7 @@ async def update():
 async def update():
     try:
         fetch_and_store_fundamental()
-        return {"message": "Done"}
+        return {"message": "Stock fundamental updated"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     

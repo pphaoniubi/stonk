@@ -41,14 +41,14 @@ const StockMainPage = () => {
         const [searchQuery, setSearchQuery] = useState('');
         const [doneMessage, setDoneMessage] = useState("");
         const [doneMessageFund, setDoneMessageFund] = useState("");
+        const [isPopupVisible, setIsPopupVisible] = useState(false); // Controls popup visibility
+
 
         const handleUpdateClick = () => {
           axios.post('http://localhost:8000/stock/update')
               .then(response => {
-                  setDoneMessage(response.data.message);
-                  setTimeout(() => {
-                    setDoneMessage("");
-                  }, 3000);
+                setDoneMessage(response.data.message);
+                setIsPopupVisible(true);
                 })
               .catch(error => {
                   console.error('Error fetching data:', error);
@@ -57,14 +57,17 @@ const StockMainPage = () => {
         const handleUpdateClickFund = () => {
           axios.post('http://localhost:8000/stock/updateFundamental') // Replace with your actual API URL
               .then(response => {
-                setDoneMessageFund(response.data.message);
-                setTimeout(() => {
-                  setDoneMessageFund("");
-                }, 3000);
+                setDoneMessage(response.data.message);
+                setIsPopupVisible(true);
               })
               .catch(error => {
                   console.error('Error fetching data:', error);
               });
+        };
+
+        const handlePopupClose = () => {
+          setIsPopupVisible(false); // Close the popup
+          setDoneMessage(""); // Clear the message
         };
       
       
@@ -214,11 +217,16 @@ const StockMainPage = () => {
       <button type="submit" className="light-blue-button">Submit</button>
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
-    {doneMessage && <div style={{ fontSize: "20px", color: "green" }}>{doneMessage}</div>}
     
     <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
-    {doneMessageFund && <div style={{ fontSize: "20px", color: "green" }}>{doneMessageFund}</div>}
-    
+    {isPopupVisible && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <p>{doneMessage}</p>
+            <button onClick={handlePopupClose}>Done</button>
+          </div>
+        </div>
+      )}
     <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
   </div>
   );
