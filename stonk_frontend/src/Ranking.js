@@ -6,7 +6,6 @@ const Ranking = () => {
   const [returns, setReturns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [proximity, setProximity] = useState([]);
-  const [rsiRanking, setRsiRanking] = useState([]);
 
   useEffect(() => {
     axios.post("http://localhost:8000/stock/getReturns")
@@ -39,9 +38,9 @@ const Ranking = () => {
       <div style={{ display: 'flex', gap: '20px' }}>
         
         {/* Annual Returns Table */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h3>Annual Returns</h3>
-          <table  className="table">
+          <table className="table">
             <thead>
               <tr>
                 <th>Index</th>
@@ -63,9 +62,9 @@ const Ranking = () => {
           </table>
         </div>
 
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h3>Proximity Rank</h3>
-          <table  className="table">
+          <table className="table">
             <thead>
               <tr>
                 <th>Index</th>

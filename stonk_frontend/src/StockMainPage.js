@@ -40,11 +40,12 @@ const StockMainPage = () => {
         const [finalInterval, setFinalInterval] = useState(selectedInterval);
         const [searchQuery, setSearchQuery] = useState('');
         const [doneMessage, setDoneMessage] = useState("");
-        const [doneMessageFund, setDoneMessageFund] = useState("");
+        const [isLoading, setIsLoading] = useState(false);
         const [isPopupVisible, setIsPopupVisible] = useState(false); // Controls popup visibility
 
 
         const handleUpdateClick = () => {
+          setIsLoading(true);
           axios.post('http://localhost:8000/stock/update')
               .then(response => {
                 setDoneMessage(response.data.message);
@@ -52,9 +53,12 @@ const StockMainPage = () => {
                 })
               .catch(error => {
                   console.error('Error fetching data:', error);
-              });
+              }).finally(() => {
+                setIsLoading(false); // Stop the spinner
+              });;
         };
         const handleUpdateClickFund = () => {
+          setIsLoading(true);
           axios.post('http://localhost:8000/stock/updateFundamental') // Replace with your actual API URL
               .then(response => {
                 setDoneMessage(response.data.message);
@@ -62,7 +66,9 @@ const StockMainPage = () => {
               })
               .catch(error => {
                   console.error('Error fetching data:', error);
-              });
+              }).finally(() => {
+                setIsLoading(false); // Stop the spinner
+              });;
         };
 
         const handlePopupClose = () => {
@@ -225,6 +231,12 @@ const StockMainPage = () => {
             <p>{doneMessage}</p>
             <button onClick={handlePopupClose}>Done</button>
           </div>
+        </div>
+      )}
+
+    {isLoading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
         </div>
       )}
     <TechnicalGraph ticker={submittedTicker} period={finalPeriod} interval={finalInterval}/>
