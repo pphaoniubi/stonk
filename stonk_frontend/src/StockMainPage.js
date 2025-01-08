@@ -119,6 +119,7 @@ const StockMainPage = () => {
           ))}
         </select>
       </label>
+      <button type="submit" className="light-blue-button">Submit</button>
 
       {/* Period radio */}
       <div>
@@ -220,7 +221,6 @@ const StockMainPage = () => {
         </label>
       </div>
       <br/>
-      <button type="submit" className="light-blue-button">Submit</button>
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
     
