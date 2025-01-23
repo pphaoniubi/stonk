@@ -148,9 +148,10 @@ function TechnicalGraph({ ticker, period, interval }) {
       {rsiImage ? <img src={rsiImage} alt="RSI Graph" /> : <p>Loading RSI...</p>}
       {volumeImage ? <img src={volumeImage} alt="Volume Graph" /> : <p>Loading Volume...</p>}
       </div>
-      <h2>High, Low, and Current Price Progress for {ticker}</h2>
+
+      <h2 style={{ marginLeft: '20px' }}>High, Low, and Current Price Progress for {ticker}</h2>
       {priceData ? (
-        <div style={{ width: "100%", marginTop: "20px" }}>
+        <div style={{ width: "calc(100% - 40px)", marginTop: "20px", marginBottom: '60px', marginLeft: '20px' }}>
           <div style={{ background: "#ccc", borderRadius: "5px", height: "30px", position: "relative" }}>
             <div
               style={{
@@ -179,7 +180,7 @@ function TechnicalGraph({ ticker, period, interval }) {
           </div>
         </div>
       ) : (
-        <p>Loading High-Low-Current Price...</p>
+        <p style={{ marginLeft: '20px', marginRight: '20px' }}>Loading High-Low-Current Price...</p>
       )}
     </div>
   );
