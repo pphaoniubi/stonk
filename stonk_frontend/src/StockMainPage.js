@@ -99,7 +99,7 @@ const StockMainPage = () => {
   return (
     <div>
     <h1>Stock Analysis Page</h1>
-    <form onSubmit={handleSubmit}  style={{ display: 'inline', marginRight: '25px' }}>
+    <form onSubmit={handleSubmit}  style={{ marginLeft: '20px' }}>
       <label>
         <span className="ticker-label">Ticker Symbol:</span>
         <input
@@ -119,7 +119,7 @@ const StockMainPage = () => {
           ))}
         </select>
       </label>
-      <button type="submit" className="light-blue-button">Submit</button>
+      <button type="submit" className="light-blue-button" style={{ marginLeft: '18px' }}>Submit</button>
 
       {/* Period radio */}
       <div>
@@ -222,7 +222,7 @@ const StockMainPage = () => {
       </div>
       <br/>
     </form>
-    <button onClick={handleUpdateClick} className="light-blue-button">Update</button>
+    <button onClick={handleUpdateClick} className="light-blue-button" style={{ marginLeft: '20px' }}>Update</button>
     
     <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
     {isPopupVisible && (
