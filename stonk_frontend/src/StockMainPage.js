@@ -122,37 +122,40 @@ const StockMainPage = () => {
       <button type="submit" className="light-blue-button" style={{ marginLeft: '18px' }}>Submit</button>
 
       {/* Period radio */}
-      <div>
+      <div className="radio-group">
         <h3>Select Period</h3>
-        <label>
+        <div className="radio-options">
           <input
             type="radio"
+            id="3mo"
             value="3mo"
             checked={selectedPeriod === "3mo"}
             onChange={() => setSelectedPeriod("3mo")}
+            className="hidden-radio"
           />
-          3 Months
-        </label>
-        <label>
+          <label htmlFor="3mo" className="radio-label">3 Months</label>
+
           <input
             type="radio"
+            id="6mo"
             value="6mo"
             checked={selectedPeriod === "6mo"}
             onChange={() => setSelectedPeriod("6mo")}
+            className="hidden-radio"
           />
-          6 Months
-        </label>
-        <label>
+          <label htmlFor="6mo" className="radio-label">6 Months</label>
+
           <input
             type="radio"
+            id="1y"
             value="1y"
             checked={selectedPeriod === "1y"}
             onChange={() => setSelectedPeriod("1y")}
+            className="hidden-radio"
           />
-          1 Year
-        </label>
+          <label htmlFor="1y" className="radio-label">1 Year</label>
+        </div>
       </div>
-
       <br/>
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button" style={{ marginLeft: '20px' }}>Update</button>

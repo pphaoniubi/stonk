@@ -1,9 +1,9 @@
 .light-blue-button {
-    background-color: #66ffff; /* Light blue color */
-    color: black;
+    background-color: #4CAF50; /* Light blue color */
+    color: white;
     padding: 13px 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 20px; 
     cursor: pointer;
   }
@@ -101,18 +101,41 @@
   z-index: 1000;
 }
 
-/* Spinner */
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #007bff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
+/* Style de base du label (bouton) */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.radio-options {
+  display: flex;
+  gap: 10px;
+}
+
+/* Hide the default radio button */
+.hidden-radio {
+  display: none;
+}
+
+/* Style the labels as buttons */
+.radio-label {
+  width: 120px;
+  padding: 12px 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  color: #333;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Apply background change when radio is checked */
+.hidden-radio:checked + .radio-label {
+  background-color: #4CAF50;
+  color: white;
 }
