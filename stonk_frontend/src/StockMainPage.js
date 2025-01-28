@@ -127,33 +127,6 @@ const StockMainPage = () => {
         <label>
           <input
             type="radio"
-            value="1d"
-            checked={selectedPeriod === "1d"}
-            onChange={() => setSelectedPeriod("1d")}
-          />
-          1 Day
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="5d"
-            checked={selectedPeriod === "5d"}
-            onChange={() => setSelectedPeriod("5d")}
-          />
-          5 Day
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1mo"
-            checked={selectedPeriod === "1mo"}
-            onChange={() => setSelectedPeriod("1mo")}
-          />
-          1 Month
-        </label>
-        <label>
-          <input
-            type="radio"
             value="3mo"
             checked={selectedPeriod === "3mo"}
             onChange={() => setSelectedPeriod("3mo")}
@@ -180,46 +153,6 @@ const StockMainPage = () => {
         </label>
       </div>
 
-      {/* Interval radio */}
-      <div>
-        <h3>Select Interval</h3>
-        <label>
-          <input
-            type="radio"
-            value="1h"
-            checked={selectedInterval === "1h"}
-            onChange={() => setSelectedInterval("1h")}
-          />
-          1 Hour
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1d"
-            checked={selectedInterval === "1d"}
-            onChange={() => setSelectedInterval("1d")}
-          />
-          1 Day
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1wk"
-            checked={selectedInterval === "1wk"}
-            onChange={() => setSelectedInterval("1wk")}
-          />
-          1 Week
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1mo"
-            checked={selectedInterval === "1mo"}
-            onChange={() => setSelectedInterval("1mo")}
-          />
-          1 Month
-        </label>
-      </div>
       <br/>
     </form>
     <button onClick={handleUpdateClick} className="light-blue-button" style={{ marginLeft: '20px' }}>Update</button>
