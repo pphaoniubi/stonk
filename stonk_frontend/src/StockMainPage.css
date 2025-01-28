@@ -1,31 +1,33 @@
-.light-blue-button {
-    background-color: #4CAF50; /* Light blue color */
+.light-green-button {
+    background-color: #4CAF50;
     color: white;
     padding: 13px 16px;
     border: none;
     border-radius: 10px;
-    font-size: 20px; 
+    font-size: 18px; 
     cursor: pointer;
+    width: 150px;
+    height: 50px;
   }
   
-  .light-blue-button:hover {
+  .light-green-button:hover {
     opacity: 0.9; /* Optional hover effect */
   }
 
   .search-bar {
-    padding: 15px; /* Increase padding */
-    font-size: 16px; /* Larger font */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid #ccc; /* Light border */
-    width: 300px; /* Adjust width */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
-    transition: all 0.3s ease; /* Smooth hover/focus effects */
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
   }
   
   .search-bar:focus {
-    outline: none; /* Remove default blue outline */
-    border-color: #6495ED; /* Change border color on focus */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhance shadow on focus */
+    outline: none;
+    border-color: #6495ED;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   .select-dropdown {

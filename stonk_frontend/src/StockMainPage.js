@@ -119,7 +119,10 @@ const StockMainPage = () => {
           ))}
         </select>
       </label>
-      <button type="submit" className="light-blue-button" style={{ marginLeft: '18px' }}>Submit</button>
+      <button type="submit" className="light-green-button" style={{ marginLeft: '18px' }}>Submit</button>
+      <button onClick={handleUpdateClick} className="light-green-button" style={{ marginLeft: '20px' }}>Update</button>
+      <button onClick={handleUpdateClickFund} className="light-green-button" style={{ marginLeft: '25px' }}>Update Fund</button>
+
 
       {/* Period radio */}
       <div className="radio-group">
@@ -158,9 +161,6 @@ const StockMainPage = () => {
       </div>
       <br/>
     </form>
-    <button onClick={handleUpdateClick} className="light-blue-button" style={{ marginLeft: '20px' }}>Update</button>
-    
-    <button onClick={handleUpdateClickFund} className="light-blue-button" style={{ marginLeft: '25px' }}>Update Fund</button>
     {isPopupVisible && (
         <div className="popup-overlay">
           <div className="popup">
