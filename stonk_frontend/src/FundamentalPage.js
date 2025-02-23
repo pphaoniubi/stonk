@@ -57,7 +57,7 @@ function FundamentalPage() {
                     </tbody>
                 </table>
             ) : (
-                <p>No data available.</p> // Message when `fundamentals` is empty
+                <p>No data available.</p>
             )}
         </div>
     );

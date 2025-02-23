@@ -5,7 +5,6 @@ from sqlalchemy.sql import insert, desc
 
 
 def fetch_and_store_fundamental():
-    # Connection and engine setup
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db', echo=True)
     metadata = MetaData()
     connection = engine.connect()
@@ -60,36 +59,27 @@ def fetch_and_store_fundamental():
 def get_fundamental_for_ticker(ticker):
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')
 
-    # Bind metadata to the existing database
     metadata = MetaData()
-
-    # Reflect the table from the database
     stonk_fundamental = Table('stonk_fundamental', metadata, autoload_with=engine)
 
-    # Create a select statement
     query = select(stonk_fundamental).where(stonk_fundamental.c.Ticker == ticker)
 
-    # Execute the query
+ 
     with engine.connect() as connection:
         result = connection.execute(query)
-        # Fetch all results
         row = result.fetchone()
         return row
 
 def get_all_fundamentals():
     engine = create_engine(f'mysql+pymysql://root:{db_password}@localhost:3306/stonk_db')
 
-    # Bind metadata to the existing database
     metadata = MetaData()
 
-    # Reflect the table from the database
     stonk_fundamental = Table('stonk_fundamental', metadata, autoload_with=engine)
     query = select(stonk_fundamental).order_by(desc(stonk_fundamental.c.Market_Cap))
 
     with engine.connect() as connection:
         result = connection.execute(query)
-        # Fetch all results
         rows = result.fetchall()
         fundamentals = [dict(row._mapping) for row in rows]
-        # Return or process the results
         return fundamentals

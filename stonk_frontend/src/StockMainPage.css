@@ -117,7 +117,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Style de base du label (bouton) */
 .radio-group {
   display: flex;
   flex-direction: column;
@@ -129,12 +128,10 @@
   gap: 10px;
 }
 
-/* Hide the default radio button */
 .hidden-radio {
   display: none;
 }
 
-/* Style the labels as buttons */
 .radio-label {
   width: 120px;
   padding: 12px 20px;
@@ -150,7 +147,6 @@
   justify-content: center;
 }
 
-/* Apply background change when radio is checked */
 .hidden-radio:checked + .radio-label {
   background-color: #4CAF50;
   color: white;

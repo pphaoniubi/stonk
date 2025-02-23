@@ -19,7 +19,6 @@ def calculate_rsi(data: pd.DataFrame, window: int = 14):
     return data
 
 def calculate_macd(data: pd.DataFrame):
-    # Calculate MACD and Signal line
     data['EMA_12'] = data['Close'].ewm(span=12, adjust=False).mean()
     data['EMA_26'] = data['Close'].ewm(span=26, adjust=False).mean()
     data['MACD'] = data['EMA_12'] - data['EMA_26']

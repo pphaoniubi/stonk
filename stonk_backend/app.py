@@ -14,7 +14,7 @@ app = FastAPI()
 
 # Allow CORS
 origins = [
-    "http://localhost:3000",  # React app on localhost:3000
+    "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]
 
@@ -28,8 +28,8 @@ app.add_middleware(
 
 class StockRequest(BaseModel):
     ticker: str
-    period: Optional[str] = '1y'  # Defaults to 1 year
-    interval: Optional[str] = '1d'  # Defaults to daily data
+    period: Optional[str] = '1y'
+    interval: Optional[str] = '1d'
 
 
 @app.get("/")
@@ -76,10 +76,9 @@ async def get_macd_graph(request: StockRequest):
 @app.post("/stock/high-low-current")
 async def get_high_low_current(request: StockRequest):
     data = fetch_data_for_ticker_as_df(request.ticker, request.period)
-    # Calculate high, low, and current price for the period
     highest_price = float(data['High'].max())
     lowest_price = float(data['Low'].min())
-    current_price = float(data['Close'].iloc[-1])  # Last closing price
+    current_price = float(data['Close'].iloc[-1])
 
     return JSONResponse(content={"highest_price": highest_price, "lowest_price": lowest_price, "current_price": current_price})
 
@@ -89,13 +88,10 @@ async def get_bollingerband(request: StockRequest):
     try:
         data = fetch_data_for_ticker_as_df(request.ticker, request.period)
         bollingerband_image = calculate_and_plot_bollinger_bands(data)
-        # Return the image data
         return {"bollingerband_image": bollingerband_image}
     except ValueError as ve:
-        # Handle specific errors related to stock data
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
-        # Handle generic errors
         raise HTTPException(status_code=500, detail="An error occurred while generating the candlestick chart.")
 
 @app.post("/stock/getReturns")
@@ -105,10 +101,8 @@ async def getReturns():
         return JSONResponse(content=sorted_returns)
 
     except ValueError as ve:
-        # Handle specific errors related to stock data
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
-        # Handle generic errors
         raise HTTPException(status_code=500, detail=e)
 
 
@@ -125,10 +119,8 @@ async def getProximityRank():
         return {'ranked_proximity': results}
     
     except ValueError as ve:
-        # Handle specific errors related to stock data
         raise HTTPException(status_code=404, detail=str(ve))
     except Exception as e:
-        # Handle generic errors
         raise HTTPException(status_code=500, detail=e)
 
 @app.post("/stock/getRSIRanking")

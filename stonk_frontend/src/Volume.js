@@ -26,7 +26,6 @@ function Volume() {
           <h2 style={{ textAlign: 'center' }}>Volume Percentage in 30d Timeframe</h2>
           <div style={{ display: 'flex', gap: '20px' }}>
             
-            {/* Volume Ranking Table */}
             <div style={{ flex: 1 }}>
               <table  className="table">
                 <thead>

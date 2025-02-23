@@ -49,7 +49,6 @@ function TechnicalGraph({ ticker, period, interval }) {
       }
     };
 
-    // Fetch MACD and RSI images
     async function fetchMacdAndRsiImages() {
       try {
         const response = await fetch("http://127.0.0.1:8000/stock/macd-rsi", {
@@ -67,7 +66,6 @@ function TechnicalGraph({ ticker, period, interval }) {
       }
     }
 
-    // Fetch volume image
     async function fetchVolumeImages() {
       try {
         const response = await fetch("http://127.0.0.1:8000/stock/getVolumeChart", {
@@ -85,7 +83,6 @@ function TechnicalGraph({ ticker, period, interval }) {
       }
     }
 
-    // Fetch high, low, and current prices
     async function fetchHighLowCurrent() {
       try {
         const response = await fetch("http://127.0.0.1:8000/stock/high-low-current", {
@@ -118,8 +115,6 @@ function TechnicalGraph({ ticker, period, interval }) {
     const { lowest, highest, current } = priceData;
     return ((current - lowest) / (highest - lowest)) * 100;
   };
-
-
 
   return (
     <div>

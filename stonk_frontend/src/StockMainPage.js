@@ -41,7 +41,7 @@ const StockMainPage = () => {
         const [searchQuery, setSearchQuery] = useState('');
         const [doneMessage, setDoneMessage] = useState("");
         const [isLoading, setIsLoading] = useState(false);
-        const [isPopupVisible, setIsPopupVisible] = useState(false); // Controls popup visibility
+        const [isPopupVisible, setIsPopupVisible] = useState(false);
 
 
         const handleUpdateClick = () => {
@@ -54,12 +54,12 @@ const StockMainPage = () => {
               .catch(error => {
                   console.error('Error fetching data:', error);
               }).finally(() => {
-                setIsLoading(false); // Stop the spinner
+                setIsLoading(false);
               });;
         };
         const handleUpdateClickFund = () => {
           setIsLoading(true);
-          axios.post('http://localhost:8000/stock/updateFundamental') // Replace with your actual API URL
+          axios.post('http://localhost:8000/stock/updateFundamental')
               .then(response => {
                 setDoneMessage(response.data.message);
                 setIsPopupVisible(true);
@@ -67,17 +67,16 @@ const StockMainPage = () => {
               .catch(error => {
                   console.error('Error fetching data:', error);
               }).finally(() => {
-                setIsLoading(false); // Stop the spinner
+                setIsLoading(false);
               });;
         };
 
         const handlePopupClose = () => {
-          setIsPopupVisible(false); // Close the popup
-          setDoneMessage(""); // Clear the message
+          setIsPopupVisible(false);
+          setDoneMessage("");
         };
       
       
-        // Update filtered tickers based on search query
         useEffect(() => {
           if (searchQuery === '') {
             setFilteredTickers(tickers);
